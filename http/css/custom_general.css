@@ -1,0 +1,99 @@
+header{
+	min-width: 1050px;
+}
+
+header ul {
+	float: right !important;
+	clear: right !important;
+}
+
+header ul li {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+header .dropdown {
+	display: inline-block !important;
+}
+
+header .dropdown ul {
+	box-shadow: -1px 1px 1px 0px whitesmoke;
+	font-size: small;
+}
+
+header ul.dropdown-menu li {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+div .mainLogo {
+	text-align: center;
+    padding: 10px 0;
+	font-family: monospace;
+	letter-spacing: 10px;
+	margin-bottom: 20px;
+	margin-top: 25vh;
+	font-size: 20px;
+}
+
+div.searchBar {
+	text-align: center;
+}
+
+.mainSearchBar {
+	width: 40%;
+	min-width: 500px;
+	max-width: 600px;
+	height: 40px;
+	border: none;
+	box-shadow: 0 0 1px 0px #a9a9a9, 0 1px 1px 0px #7d7d7d;
+	font-size: 16px;
+	font-family: arial;
+	padding: 0 15px;
+}
+
+.mainSearchBar:focus {
+	outline-color: #f7f7f7;
+}
+
+.mainWrapper {
+	width: 60%;
+	margin: auto;
+	max-width: 1000px;
+}
+
+input.mainSearchButton.form-control, input.advancedSearchButton.form-control {
+	display: inline-block;
+	width: auto;
+	margin: 30px 3px;
+	font-weight: bold;
+	font-size: 13px;
+	color: grey;
+	box-shadow: none;
+	border-radius: 2px;
+	background: whitesmoke;
+	border: 1px solid white;
+}
+
+input.mainSearchButton.form-control:hover , input.advancedSearchButton.form-control:hover {
+	color: #5a5a5a;
+	border: 1px solid silver;
+	box-shadow: 0 1px 20px -10px black;
+	cursor: auto;
+}
+
+#userDropdown {
+	background-color: #3d80ba;
+	color: white;
+	padding: 0 5px;
+	border-radius: 5px;
+	font-weight: bold;
+	display: inline-block;
+	cursor: pointer;
+}
+
+header .dropdown .glyphicon {
+    color: #3d80ba;
+    margin: 0 10px 0 0;
+}

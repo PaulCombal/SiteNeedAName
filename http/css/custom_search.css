@@ -1,0 +1,42 @@
+header.navbar {
+	background: #fafafa;
+	border-bottom: 1px solid #ebebeb;
+	height: 115px;
+	padding-top: 15px;
+}
+
+form.navbar-text {
+	margin: 4px 20px;
+}
+
+header form {
+	display: inline;
+}
+
+.searchFilters {
+	float: left !important;
+	clear: both !important;
+	bottom: 0;
+	position: absolute;
+	padding-left: 84px;
+	margin: 0;
+}
+
+.searchFilters li {
+	padding-bottom: 10px;
+	border-bottom: 2px solid lightslategrey;
+}
+
+.searchFilters li a {
+	color: grey;
+	font-weight: bold;
+}
+
+.searchFilters li a:hover {
+	color: #5a5a5a;
+	text-decoration: none;
+}
+
+.searchFilters li a:focus {
+	text-decoration: none;
+}
