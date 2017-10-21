@@ -3,6 +3,10 @@ var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
 $(document).ready(()=>{
+	$("a#showLongDescField").click(()=>{
+		$(".hiddenField").removeAttr("style");
+		$("a#showLongDescField").remove();
+	});
 
 	//jQuery time
 	$(".next").click(function(){

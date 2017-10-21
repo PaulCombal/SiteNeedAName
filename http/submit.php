@@ -7,7 +7,7 @@
 
     // Redirect if the user not logged in.
 	if(!isset($_SESSION["username"])) {
-	    header("Location: ../../index.php");
+	    header("Location: ./register.php");
 	    exit;
 	}
 ?>
@@ -82,21 +82,23 @@
 			                <input type="button" name="next" class="next action-button" value="Suivant"/>
 			            </fieldset>
 			            <fieldset>
-			                <h2 class="fs-title">Social Profiles</h2>
-			                <h3 class="fs-subtitle">Your presence on the social network</h3>
-			                <input type="text" name="twitter" placeholder="Twitter"/>
-			                <input type="text" name="facebook" placeholder="Facebook"/>
-			                <input type="text" name="gplus" placeholder="Google Plus"/>
-			                <input type="button" name="previous" class="previous action-button-previous" value="Précédant"/>
+			                <h2 class="fs-title">Liens et hash</h2>
+			                <h3 class="fs-subtitle">Quels sont les fichiers à référencer?</h3>
+			                <input type="text" name="file_name" placeholder="Nom du fichier/dossier à référencer sur Monsite (requis)" required/>
+			                <input type="text" name="ipfs_hash" placeholder="Hash IPFS (requis)" required/>
+			                <input type="text" name="http_mirror" placeholder="Mirroir vers un site HTTP (optionnel)"/>
+			                <input type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
 			                <input type="button" name="next" class="next action-button" value="Suivant"/>
 			            </fieldset>
 			            <fieldset>
-			                <h2 class="fs-title">Create your account</h2>
-			                <h3 class="fs-subtitle">Fill in your credentials</h3>
-			                <input type="text" name="email" placeholder="Email"/>
-			                <input type="password" name="pass" placeholder="Password"/>
-			                <input type="password" name="cpass" placeholder="Confirm Password"/>
-			                <input type="button" name="previous" class="previous action-button-previous" value="Précédant"/>
+			                <h2 class="fs-title">Description des fichiers</h2>
+			                <h3 class="fs-subtitle">Une courte description permet de mieux renseigner les internautes</h3>
+			                <input type="text" name="short_desc" placeholder="Description"/>
+			                <a href="javascript:void(0)" id="showLongDescField">Renseigner une description longue</a>
+			                <input type="text" name="short_desc" placeholder="Description longue champ caché de base" class="hiddenField" style="display: none"/>
+			                <input type="text" name="pass" placeholder="liste déroulante catégorie" required/>
+			                <input type="text" name="cpass" placeholder="liste droulante subcatégorie" required />
+			                <input type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
 			                <input type="submit" name="submit" class="submit action-button" value="Confirmer l'envoi"/>
 			            </fieldset>
 			        </form>

@@ -5,6 +5,17 @@ svg {
 	width: 100%;
 }
 
+#msform input[type=submit] {
+    width: 135px;
+}
+
+a#showLongDescField {
+    margin: -5px auto 25px auto;
+    display: inline-block;
+    font-size: small;
+    float: left;
+}
+
 /* Downloaded shit starts here */
 /* see https://codepen.io/designify-me/pen/qrJWpG */
 
