@@ -84,22 +84,35 @@
 			            <fieldset>
 			                <h2 class="fs-title">Liens et hash</h2>
 			                <h3 class="fs-subtitle">Quels sont les fichiers à référencer?</h3>
-			                <input type="text" name="file_name" placeholder="Nom du fichier/dossier à référencer sur Monsite (requis)" required/>
-			                <input type="text" name="ipfs_hash" placeholder="Hash IPFS (requis)" required/>
+			                <input type="text" name="file_name" placeholder="Nom du fichier/dossier à référencer sur Monsite (requis)" required id="req1" autofocus/>
+			                <input type="text" name="ipfs_hash" placeholder="Hash IPFS (requis)" id="req2"/>
 			                <input type="text" name="http_mirror" placeholder="Mirroir vers un site HTTP (optionnel)"/>
 			                <input type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
-			                <input type="button" name="next" class="next action-button" value="Suivant"/>
+			                <input type="button" name="next" class="next action-button" value="Suivant" id="but1" disabled/>
 			            </fieldset>
 			            <fieldset>
 			                <h2 class="fs-title">Description des fichiers</h2>
 			                <h3 class="fs-subtitle">Une courte description permet de mieux renseigner les internautes</h3>
 			                <input type="text" name="short_desc" placeholder="Description"/>
 			                <a href="javascript:void(0)" id="showLongDescField">Renseigner une description longue</a>
-			                <input type="text" name="short_desc" placeholder="Description longue champ caché de base" class="hiddenField" style="display: none"/>
-			                <input type="text" name="pass" placeholder="liste déroulante catégorie" required/>
-			                <input type="text" name="cpass" placeholder="liste droulante subcatégorie" required />
+			                <textarea type="text" name="short_desc" placeholder="Description longue, ce champ accepte le Markdown" class="hiddenField" style="display: none"></textarea>
+			                <br />
+			                <select class="form-control" name="cat">
+			                	<option value="">-- Catégorie</option>
+			                	<option value="XXX">XXX</option>
+			                	<option value="XXX">XXX</option>
+			                	<option value="XXX">XXX</option>
+			                	<option value="XXX">XXX</option>
+			                </select>
+			                <select class="form-control" name="subcat" disabled>
+			                	<option value="">-- Sous-catégorie</option>
+			                	<option value="XXX">XXX</option>
+			                	<option value="XXX">XXX</option>
+			                	<option value="XXX">XXX</option>
+			                	<option value="XXX">XXX</option>
+			                </select>
 			                <input type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
-			                <input type="submit" name="submit" class="submit action-button" value="Confirmer l'envoi"/>
+			                <input type="submit" name="submit" class="submit action-button" value="Confirmer l'envoi" disabled/>
 			            </fieldset>
 			        </form>
 			    </div>

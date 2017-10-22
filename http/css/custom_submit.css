@@ -16,6 +16,15 @@ a#showLongDescField {
     float: left;
 }
 
+input[disabled] {
+    background: #9d9dad !important;
+    cursor: auto !important;
+}
+
+select.form-control {
+    margin-bottom: 10px;
+}
+
 /* Downloaded shit starts here */
 /* see https://codepen.io/designify-me/pen/qrJWpG */
 

@@ -3,11 +3,57 @@ var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
 $(document).ready(()=>{
+	
+	//*********** Validation / custom jQuery ************//
+	//Show the long desc field once desired
 	$("a#showLongDescField").click(()=>{
 		$(".hiddenField").removeAttr("style");
 		$("a#showLongDescField").remove();
 	});
 
+	//Enable the "Next" button once all required fields are filled
+	function checkFirstFieldsFilled(){
+		//Todo, check ipfs hash regex
+		if($("#req1").val() != "" && $("#req2").val() != ""){
+			$("#but1").prop("disabled", false);
+		}
+		else{
+			$("#but1").prop("disabled", true);
+		}
+	}
+
+	$("#req1").bind("input", checkFirstFieldsFilled);
+	$("#req2").bind("input", checkFirstFieldsFilled);
+
+	//Same for the submit button and categories.
+	function updateSubcategories(){
+		var cat = $("select[name=cat]").val();
+		if(cat != ""){
+			fillSubcategories(cat);
+			$("select[name=subcat]").prop("disabled", false);
+		}
+		else{
+			$("select[name=subcat]").prop("disabled", true);	
+		}
+	}
+
+	function fillSubcategories(cat){
+		console.log(cat);
+	}
+
+	function updateSubmitButton(){
+		if ($("select[name=subcat]").val() != "") {
+			$("input[type=submit]").prop("disabled", false);
+		}
+		else{
+			$("input[type=submit]").prop("disabled", true);	
+		}
+	}
+
+	$("select[name=cat]").change(updateSubcategories);
+	$("select[name=subcat]").change(updateSubmitButton);
+
+	//********** Stock jQuery for front ***********//
 	//jQuery time
 	$(".next").click(function(){
 		if(animating) return false;
