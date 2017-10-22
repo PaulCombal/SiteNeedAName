@@ -25,6 +25,10 @@ select.form-control {
     margin-bottom: 10px;
 }
 
+#errorDiv {
+    margin-top: 20px;
+}
+
 /* Downloaded shit starts here */
 /* see https://codepen.io/designify-me/pen/qrJWpG */
 

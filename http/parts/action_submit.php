@@ -10,6 +10,15 @@
 	 */
 	function submit() {
 		$db = new Db();
+
+		// Directly related to the database. Do not change unless you
+		//Also modify the database length
+		define('MAX_TITLE_LENGTH', 60);
+		define('MAX_DESCRIPTION_LENGTH', 60);
+		define('MAX_LONGDESCRIPTION_LENGTH', 5000);
+		define('MAX_HASH_LENGTH', 100);
+		define('MAX_HTTPMIRROR_LENGTH', 255);
+		define('GENERIC_ERROR_MESSAGE', '<script>$("#errorDiv").removeAttr("style");</script>');
 		
 		# Required values
 		$title = $db -> quote(htmlspecialchars($_POST['title']));
@@ -18,32 +27,38 @@
 		$subcatgeroy_id = $db -> quote(htmlspecialchars($_POST['subcat']));
 
 		# Optional values
-		$http_mirror = (isset($_POST['http_mirror']) AND !empty($_POST['http_mirror'])) ? $db -> quote(htmlspecialchars($_POST['http_mirror'])) : false;
+		$http_mirror = (isset($_POST['http_mirror']) AND !empty($_POST['http_mirror'])) ? $db -> quote(htmlspecialchars($_POST['http_mirror'])) : "NULL";
+		
+		$short_desc = (isset($_POST['short_desc']) AND !empty($_POST['short_desc'])) ? $db -> quote(htmlspecialchars($_POST['short_desc'])) : "NULL";
 
-		echo $http_mirror;
+		$long_desc = (isset($_POST['long_desc']) AND !empty($_POST['long_desc'])) ? $db -> quote(htmlspecialchars($_POST['long_desc'])) : "NULL";
 
-		/*if(valid_password(htmlspecialchars($_POST['password']))) {
-			$result = $db -> select("SELECT `id`,`username`,`password`,`email` FROM `users` WHERE `email`=".$email."");
-			if(count($result) != 0) {
-				if (password_verify($password, $result[0]['password'])) {
-					$key = md5(uniqid(rand(), true));
-					$db -> query("UPDATE `users` SET `tempkey`='".$key."' WHERE `email`=".$email."");
+		#Users accessing this page must be logged
+		$mySafeUserID = $_SESSION["userid"];
+		#There shouldn't be any issue with session vars, but here goes nothing
+		if(!is_numeric($mySafeUserID))
+			die("Something fucked up bad");
+		
+		if (smaller_length($title, MAX_TITLE_LENGTH) And 
+			smaller_length($ipfs_hash, MAX_HASH_LENGTH) And
+			smaller_length($http_mirror, MAX_HTTPMIRROR_LENGTH) And
+			smaller_length($short_desc, MAX_DESCRIPTION_LENGTH) And
+			smaller_length($long_desc, MAX_LONGDESCRIPTION_LENGTH)
+			) {
+			#All lengths Are correct
+		}
+		else{
+			die(GENERIC_ERROR_MESSAGE);
+		}
 
-					$_SESSION["username"] = $result[0]['username'];
-					$_SESSION["email"] = $result[0]['email'];
-					$_SESSION["userid"] = $result[0]['id'];
-					$_SESSION["key"] = $key;
+		#TODO regex checks on hash / http mirror
 
-					header("Location: ../../index.php");
-				} else {
-					exit(form_feedback("Mauvais mot de passe ou nom d'utilisateur."));
-				}
-			} else {
-				exit(form_feedback("Compte d'utilisateur non trouvé."));
-			}
-		} else {
-			exit(form_feedback("Le mot de passe que vous avez entré est trop court."));
-		}*/	
+		#If the below code is executed, this means the post data is well formatted
+		$prettySQL = "INSERT INTO `files` (`category_id`, `subcategory_id`, `title`, `description`, `longdescription`, `uploaddate`, `hash`, `httpmirror`, `user_id`) VALUES(" . $category_id . ", " . $subcatgeroy_id . ", " . $title . ", " . $short_desc . ", " . $long_desc . ", NOW(), " . $ipfs_hash . ", " . $http_mirror . ", " . $mySafeUserID . ");";
+
+		#echo $prettySQL;
+		
+		$db -> query($prettySQL);
 	}
 
 	/**
@@ -54,9 +69,12 @@
 	 * @param integer max length.
 	 * @return boolean.
 	 */
-	function smaller_length($value, $lenght) {
-		if(strlen($value) <= $length) return true;
-		return false;
+	function smaller_length($value, $length) {
+		# If an optional field has not been filled, pass the check anyway
+		if($value === "NULL")
+			return true;
+		else
+			return is_string($value) and strlen($value) <= $length + 2; //+2 => mind the quotes
 	}
 
 ?>

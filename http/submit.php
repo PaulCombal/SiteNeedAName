@@ -87,18 +87,18 @@
 			            <fieldset>
 			                <h2 class="fs-title">Liens et hash</h2>
 			                <h3 class="fs-subtitle">Quels sont les fichiers à référencer?</h3>
-			                <input type="text" name="title" placeholder="Nom du fichier/dossier à référencer sur Monsite (requis)" required id="req1" autofocus/>
-			                <input type="text" name="ipfs_hash" placeholder="Hash IPFS (requis)" id="req2"/>
-			                <input type="text" name="http_mirror" placeholder="Mirroir vers un site HTTP (optionnel)"/>
+			                <input type="text" name="title" placeholder="Nom du fichier/dossier à référencer sur Monsite (requis)" required id="req1" maxlength="60" autofocus/>
+			                <input type="text" name="ipfs_hash" placeholder="Hash IPFS (requis)" id="req2"  maxlength="100"/>
+			                <input type="text" name="http_mirror" placeholder="Mirroir vers un site HTTP (optionnel)"  maxlength="255"/>
 			                <input type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
 			                <input type="button" name="next" class="next action-button" value="Suivant" id="but1" disabled/>
 			            </fieldset>
 			            <fieldset>
 			                <h2 class="fs-title">Description des fichiers</h2>
 			                <h3 class="fs-subtitle">Une courte description permet de mieux renseigner les internautes</h3>
-			                <input type="text" name="short_desc" placeholder="Description"/>
+			                <input type="text" name="short_desc" placeholder="Description"  maxlength="60"/>
 			                <a href="javascript:void(0)" id="showLongDescField">Renseigner une description longue</a>
-			                <textarea type="text" name="long_desc" placeholder="Description longue, ce champ accepte le Markdown" class="hiddenField" style="display: none"></textarea>
+			                <textarea type="text" name="long_desc" placeholder="Description longue, ce champ accepte le Markdown" class="hiddenField" style="display: none"  maxlength="5000"></textarea>
 			                <br />
 			                <select class="form-control" name="cat">
 			                	<option value="">-- Catégorie (requis)</option>
@@ -119,6 +119,14 @@
 			                <input type="submit" class="submit action-button" value="Confirmer l'envoi" disabled/>
 			            </fieldset>
 			        </form>
+			        <div id="errorDiv" class="alert alert-danger" style="display: none;">
+			        	Une erreur s'est produite lors du traitement de votre requête. Si vous n'avez pas modifié le contenu de cette page web, vous nous rendriez un grand service en signalant votre problème sur <a href="#">la page Github du site</a>. mettre un lien ici bordel ça traine.
+			        	<br />
+			        	<br />
+			        	There was an error processing your request. If you did not try to modify the content of this webpage, please <a href="#">report the issue on Github</a>. 
+			        	<br />
+			        	TODO ADD A LINK TO REPO HERE
+			        </div>
 			    </div>
 			</div>
 			<!-- /.MultiStep Form -->
@@ -132,7 +140,7 @@
         <!-- Submit handling -->
         <?php
             include_once "parts/action_submit.php";
-            
+
             if (!empty($_POST['title']) && !empty($_POST['ipfs_hash']) && !empty($_POST['cat']) && !empty($_POST['subcat'])) {
                 submit();
                 $_POST = array();
