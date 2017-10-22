@@ -182,8 +182,9 @@ $(document).ready(()=>{
 		});
 	});
 
-	$(".submit").click(function(){
+	/*$(".submit").click(function(){
+		$("form").submit();
 		return false;
-	})
+	})*/
 
 });
