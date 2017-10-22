@@ -2,6 +2,17 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
+//Make sure not to change the order or content of those, they are directly related to database indexes
+const subcatMovies = ["Action", "Polar", "Comédie"];
+const subcatSeries = ["Action", "Polar", "Comédie"];
+const subcatMusic = []; //TODO
+const subcatGames = []; //TODO
+const subcatSoftware = []; //TODO
+const subcatAnime = []; //TODO
+const subcatBooks = []; //TODO
+const subcatXXX = []; //TODO
+const subcatOthers = []; //TODO
+
 $(document).ready(()=>{
 	
 	//*********** Validation / custom jQuery ************//
@@ -38,7 +49,48 @@ $(document).ready(()=>{
 	}
 
 	function fillSubcategories(cat){
-		console.log(cat);
+		var arrToIterate = [];
+
+		$("select[name=subcat]").empty();
+		$("select[name=subcat]").append('<option value="">-- Sous-catégorie (requis)</option>');
+
+		switch (cat){
+			case "1":
+				arrToIterate = subcatMovies;
+				break;
+			case "2":
+				arrToIterate = subcatSeries;
+				break;
+			case "3":
+				arrToIterate = subcatMusic;
+				break;
+			case "4":
+				arrToIterate = subcatGames;
+				break;
+			case "5":
+				arrToIterate = subcatSoftware;
+				break;
+			case "6":
+				arrToIterate = subcatAnime;
+				break;
+			case "7":
+				arrToIterate = subcatBooks;
+				break;
+			case "8":
+				arrToIterate = subcatXXX;
+				break;
+			case "9":
+				arrToIterate = subcatOthers;
+				break;
+			default:
+				arrToIterate = ["Erreur, avez vous fait inspecter l'élément tel un hacker de l'extrême?"];
+				break;
+		}
+
+		$(arrToIterate).each((index, element)=>{
+			$("select[name=subcat]").append('<option value="' + (index + 1) + '">' + element + '</option>');
+		});
+
 	}
 
 	function updateSubmitButton(){
@@ -52,6 +104,8 @@ $(document).ready(()=>{
 
 	$("select[name=cat]").change(updateSubcategories);
 	$("select[name=subcat]").change(updateSubmitButton);
+
+
 
 	//********** Stock jQuery for front ***********//
 	//jQuery time

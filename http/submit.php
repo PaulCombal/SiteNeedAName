@@ -98,18 +98,19 @@
 			                <textarea type="text" name="short_desc" placeholder="Description longue, ce champ accepte le Markdown" class="hiddenField" style="display: none"></textarea>
 			                <br />
 			                <select class="form-control" name="cat">
-			                	<option value="">-- Catégorie</option>
-			                	<option value="XXX">XXX</option>
-			                	<option value="XXX">XXX</option>
-			                	<option value="XXX">XXX</option>
-			                	<option value="XXX">XXX</option>
+			                	<option value="">-- Catégorie (requis)</option>
+			                	<option value="1">Films</option>
+			                	<option value="2">Séries</option>
+			                	<option value="3">Musique</option>
+			                	<option value="4">Jeux</option>
+			                	<option value="5">Logiciels</option>
+			                	<option value="6">Anime</option>
+			                	<option value="7">Livres</option>
+			                	<option value="8">XXX</option>
+			                	<option value="9">Autres</option>	
 			                </select>
 			                <select class="form-control" name="subcat" disabled>
-			                	<option value="">-- Sous-catégorie</option>
-			                	<option value="XXX">XXX</option>
-			                	<option value="XXX">XXX</option>
-			                	<option value="XXX">XXX</option>
-			                	<option value="XXX">XXX</option>
+			                	<option value="">-- Sous-catégorie (requis)</option>
 			                </select>
 			                <input type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
 			                <input type="submit" name="submit" class="submit action-button" value="Confirmer l'envoi" disabled/>
