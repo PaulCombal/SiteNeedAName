@@ -58,7 +58,11 @@
 
 		#echo $prettySQL;
 		
-		$db -> query($prettySQL);
+		if($db -> query($prettySQL) === false)
+			showErrorMessage($db -> error());
+		else
+			echo "Le fichier a été soumis. D'ici peu un dev aura la foi d'écrire un code pour vous rediriger!"; //Todo: redirect to post
+
 	}
 
 	/**
@@ -75,6 +79,20 @@
 			return true;
 		else
 			return is_string($value) and strlen($value) <= $length + 2; //+2 => mind the quotes
+	}
+
+	/**
+	* Displays the SQL error (for now), and translates it to a human-readable 
+	* error message
+	*
+	* @param message
+	*  The SQL error message
+	* 
+	* @return
+	*  Nothing
+	*/
+	function showErrorMessage($message) {
+		echo $message;
 	}
 
 ?>

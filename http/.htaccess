@@ -1,0 +1,13 @@
+#Pense bête àl'éventuel futur moi:
+# - Trouver un moyen d'automatiser ce bordel
+# - les .htaccess, c'est de la merde, mieux vaut écrire dans la bonne balise <directory> de httpd.conf
+# - décommenter la ligne loadmodule .._rewrite.so
+
+# On suit les liens symboliques 
+Options +FollowSymlinks 
+# Activation du mod rewrite d'Apache 
+RewriteEngine On
+
+# Réécriture de index.html vers index.php 
+RewriteRule ^index\.html$ /index.php [L]
+#RewriteRule ^mongrostest$ /index.php [L] #OK!
