@@ -8,6 +8,9 @@ Options +FollowSymlinks
 # Activation du mod rewrite d'Apache 
 RewriteEngine On
 
+# 404 TODO
+ErrorDocument 404 /index.html
+
 # Réécriture de index.html vers index.php 
 RewriteRule ^index\.html$ /index.php [L]
 #RewriteRule ^mongrostest$ /index.php [L] #OK!

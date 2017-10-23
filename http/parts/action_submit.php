@@ -18,7 +18,7 @@
 		define('MAX_LONGDESCRIPTION_LENGTH', 5000);
 		define('MAX_HASH_LENGTH', 100);
 		define('MAX_HTTPMIRROR_LENGTH', 255);
-		define('GENERIC_ERROR_MESSAGE', '<script>$("#errorDiv").removeAttr("style");</script>');
+		define('SHOW_DEFAULT_ERROR_MESSAGE', '<script>$("#errorDiv").removeAttr("style");</script>');
 		
 		# Required values
 		$title = $db -> quote(htmlspecialchars($_POST['title']));
@@ -48,7 +48,8 @@
 			#All lengths Are correct
 		}
 		else{
-			die(GENERIC_ERROR_MESSAGE);
+			#default error message is: something went bad, please report to github
+			die(SHOW_DEFAULT_ERROR_MESSAGE);
 		}
 
 		#TODO regex checks on hash / http mirror
@@ -92,7 +93,23 @@
 	*  Nothing
 	*/
 	function showErrorMessage($message) {
-		echo $message;
+		#Make sure to check the database constraint names before changing anything
+		switch (true) {
+			case strstr($message, 'title_UNIQUE'):
+				$errorMessage = "Un autre fichier possède déjà ce titre, veuillez vérifier que le fichier à référencer ne le soit pas déjà.";
+				break;
+
+			case strstr($message, 'hash_UNIQUE'):
+				$errorMessage = "Le hash que vous avez entré est déjà référencé.";
+				break;
+			
+			default:
+				$errorMessage = "Une erreur inconnue s'est produite, informez les développeurs que vous avez vous ce message: " . $message;
+				break;
+		}
+
+		#We empty the error div, and set the new error message in it
+		echo '<script>$("#errorDiv").removeAttr("style").empty().append("' . $errorMessage . '");</script>';
 	}
 
 ?>

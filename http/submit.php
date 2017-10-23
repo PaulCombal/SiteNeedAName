@@ -127,6 +127,8 @@
 			        	<br />
 			        	TODO ADD A LINK TO REPO HERE
 			        </div>
+			        <!-- Do something clean when putting an img for branding -->
+			        <a href="./" style="margin: 25px 0;display: inline-block;text-align: center;width: 100%;">MonLogo</a>
 			    </div>
 			</div>
 			<!-- /.MultiStep Form -->
