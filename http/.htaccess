@@ -9,8 +9,8 @@ Options +FollowSymlinks
 RewriteEngine On
 
 # 404 TODO
-ErrorDocument 404 /index.html
+ErrorDocument 404 /404.php
 
 # Réécriture de index.html vers index.php 
 RewriteRule ^index\.html$ /index.php [L]
-#RewriteRule ^mongrostest$ /index.php [L] #OK!
+RewriteRule ^télécharger\/([0-9]+)\/.*$ /file.php?id=$1 [L]

@@ -60,10 +60,12 @@
 		#echo $prettySQL;
 		
 		if($db -> query($prettySQL) === false)
-			showErrorMessage($db -> error());
-		else
-			echo "Le fichier a été soumis. D'ici peu un dev aura la foi d'écrire un code pour vous rediriger!"; //Todo: redirect to post
-
+			die(showErrorMessage($db -> error()));
+		
+		echo "Le fichier a été soumis. D'ici peu un dev aura la foi d'écrire un code pour vous rediriger!"; //Todo: redirect to post
+		#'Headers already sent by' may occur
+		#header("Location: ../../index.php");
+		#echo '<script>window.location.replace(window.location.origin + '/' + id + '/' + urlencode(titre))</script>';
 	}
 
 	/**

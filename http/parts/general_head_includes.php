@@ -1,7 +1,8 @@
-	
+<?php $base = "http://" . $_SERVER["HTTP_HOST"] . "/"; ?>
+
 <!-- Main CSS rules -->
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/custom_general.css" />
+<link rel="stylesheet" href="<?php echo $base; ?>css/bootstrap.min.css" />
+<link rel="stylesheet" href="<?php echo $base; ?>css/custom_general.css" />
 
 <!-- Necessary scripts for jQuery and Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
