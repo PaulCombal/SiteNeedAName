@@ -1,3 +1,8 @@
-* [ ] Ajouter une page 404
-* [ ] Automatiser l'URL rewriting
-* [ ] Rediriger vers une page post url rewritée
+* [ ] Branding : logo, titre, etc
+* [ ] Recette URL rewriting
+* [ ] Ajouter les scripts SQL de création de base
+* [ ] Page users
+* [ ] Flags Post
+
+
+===> v 0.1
