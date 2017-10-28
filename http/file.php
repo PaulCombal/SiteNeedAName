@@ -48,8 +48,6 @@
 	catch(Exception $e)	{
 		die("Une erreur est survenue lors de la récupération des informations fichier :( <br>" . $e->getMessage());
 	}
-
-	print_r($global_arr);
 ?>
 
 <!DOCTYPE html>
@@ -74,71 +72,98 @@
 		?>
 	</div>
 
-	<div id="fileWrapper">
-		<div id="titleWrapper">
-			<div class="sm-6-col">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
 				<h1 id="fileTitle"><?php echo $global_arr["file_title"];?></h1>
 			</div>
-			<div class="sm-6-col">
-				<div id="submitter"><a href="../../users/<?php echo $global_arr["user_name"]; ?>">Soumis par <?php echo $global_arr["user_name"]; ?></a>
-				</div>
+			<!--<div class="col-md-6 align-right">-->
+			<div class="col-md-6 blockquote-reverse">	
 				<div id="uploadDate">
 					<em>Référencé le <?php echo $global_arr["file_upload_date"]; ?></em>
 				</div>
+				<div id="submitter"><a href="../../users/<?php echo $global_arr["user_name"]; ?>">Soumis par <?php echo $global_arr["user_name"]; ?></a>
+				</div>
 			</div>
 		</div>
-		<br />
-		<!-- If a shortdesc is specified -->
+		<hr />
 
-		<div id="shortDesc">
-			<?php if (empty($global_arr["file_short_description"])) {
+		<h2>Détails</h2>
+		<div class="row">
+			<!-- If a shortdesc is specified -->
+			<div id="shortDesc">
+				<h4 class="description">Description courte</h4>
+				<?php if (empty($global_arr["file_short_description"])) {
+					?>
+					<div class="noDescription">
+						<em>Aucune desciption courte n'est disponible. <a href="#">TODO Suggérer une description</a></em>
+					</div>
+					<?php
+				}
+				else{
+					?>
+					<?php
+					echo $global_arr["file_short_description"];
+				}
 				?>
-				<div class="noDescription">
-					Aucune desciption courte n'est disponible. <a href="#">Aidez moi je vous en supplie</a>
-				</div>
-				<?php
-			}
-			else{
-				?>
-				<div class="description">Description courte</div>
-				<br />
-				<?php
-				echo $global_arr["file_short_description"];
-			}
-			?>
+			</div>
 		</div>
 		
 		<!-- If a long description is specified -->
-		<div id="longDesc">
-			<?php if (empty($global_arr["file_long_description"])) {
-				?>
-				<div class="noDescription">
-					Aucune desciption n'est disponible. <a href="#">Aidez moi je vous en supplie</a>
-				</div>
-				<?php
-			}
-			else{
-				?>
-				<div class="description">Description</div>
-				<br />
-				<?php
-				echo $global_arr["file_long_description"];
-			}
-			?>
-		</div>
-
-		<!-- Links and stats -->
-		<div id="linksDiv">
-			<h3>Liens et statistiques</h3>
-			<div id="hash">
-				<div class="description">Hash</div>
-				<br />
-				<?php
-				echo $global_arr["file_hash"]; 
+		<div class="row">
+			<!-- If a longdesc is specified -->
+			<div id="shortDesc">
+				<h4 class="description">Description longue</h4>
+				<?php if (empty($global_arr["file_long_description"])) {
+					?>
+					<div class="noDescription">
+						<em>Aucune desciption longue n'est disponible. <a href="#">TODO Suggérer une description détaillée</a></em>
+					</div>
+					<?php
+				}
+				else{
+					?>
+					<?php
+					echo $global_arr["file_long_description"];
+				}
 				?>
 			</div>
+		</div>
 
-			<!-- TODO -->
+		<hr />
+		<h2>Liens et statistiques</h2>
+		<!-- Links and stats -->
+		<div class="row">
+			<div id="hash">
+				<h4>Hash IPFS</h4>
+				<div id="ipfs-hash">
+					<?php
+						echo $global_arr["file_hash"]; 
+					?>
+					<!-- TODO Bouton copier -->
+				</div>
+				<h4>Mirroir HTTP</h4>
+				<div>
+					<?php
+						if(empty($global_arr['file_mirror_http'])) {
+							echo 'Aucun mirroir. <a href="#">Proposer une suggestion</a>';
+						}
+						else {
+							echo $global_arr['file_mirror_http'];
+						}
+					?>
+				</div>
+			</div>
+
+			
+			<!-- TODO Stats (likes/dislikes/traffic..) -->
+		</div>
+
+		<hr />
+		<h2>Commentaires des utilisateurs Monsite</h2>
+		<!-- TODO -->
+		<div class="row">
+			Fonctionnalité à venir!
 		</div>
 	</div>
 </body>

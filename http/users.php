@@ -102,7 +102,7 @@
 										echo $row['upload_date'];
 									echo "</td>";
 									echo "<td>";
-										echo '<a href="./files/<TODO put file ID here>/' . $row['title'] .'">Consulter</a>';
+										echo '<a href="../télécharger/' . $row['file_id'] . '/' . $row['title'] .'">Consulter</a>';
 									echo "</td>";
 							 	echo "</tr>";
 							 } 

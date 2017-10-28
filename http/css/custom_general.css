@@ -97,3 +97,7 @@ header .dropdown .glyphicon {
     color: #3d80ba;
     margin: 0 10px 0 0;
 }
+
+.align-right {
+	text-align: right;
+}
