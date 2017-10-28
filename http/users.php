@@ -34,11 +34,8 @@
 		$global_arr['reg_date'] = $result[0]['reg_date'];
 		$global_arr['user_id'] = $result[0]['userId'];
 
-		echo "1. " . $db->error();
 		# Get user posts
 		$result = $db -> select ("CALL getUserPostsById(" . $global_arr['user_id'] . ", 10, 1);");
-
-		echo "2. " . $db->error();
 		
 	}
 	catch(Exception $e)	{
@@ -78,12 +75,41 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="userHeader karma">
+			<div class="userHeader files">
 				<h3>
 					Fichiers
 				</h3>
-				<?php print_r($result); ?>
-				<!-- Stats, badges, etc -->
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Titre</th>
+							<th>Description</th>
+							<th>Date de référencement</th>
+							<th>Page dédiée</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+							foreach ($result as &$row) {
+								echo "<tr>";
+									echo "<td>";
+										echo $row['title'];
+									echo "</td>";
+									echo "<td>";
+										echo $row['short_desc'];
+									echo "</td>";
+									echo "<td>";
+										echo $row['upload_date'];
+									echo "</td>";
+									echo "<td>";
+										echo '<a href="./files/<TODO put file ID here>/' . $row['title'] .'">Consulter</a>';
+									echo "</td>";
+							 	echo "</tr>";
+							 } 
+							
+						?>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
