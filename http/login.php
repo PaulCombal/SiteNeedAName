@@ -1,15 +1,15 @@
 <?php
-ob_start();
-session_start();
+    ob_start();
+    session_start();
 
-    // Include plugin.
-    //include_once "../../plugins/private_signup_plugin.php";
+        // Include plugin.
+        //include_once "../../plugins/private_signup_plugin.php";
 
-    // Redirect if the user is already logged in.
-if(!empty($_SESSION["username"])) {
-    header("Location: ../../index.php");
-    exit;
-}
+        // Redirect if the user is already logged in.
+    if(!empty($_SESSION["username"])) {
+        header("Location: ../../index.php");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>

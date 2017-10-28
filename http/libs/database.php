@@ -31,12 +31,13 @@
          * @param $query The query string
          * @return mixed The result of the mysqli::query() function
          */
-        public function query($query) {
+        public function query($query, $mode = MYSQLI_STORE_RESULT) {
             // Connect to the database
             $connection = $this -> connect();
 
             // Query the database
-            $result = $connection -> query($query);
+            $result = $connection -> query($query, $mode);
+            $connection -> next_result();
 
             return $result;
         }
@@ -47,15 +48,18 @@
          * @param $query The query string
          * @return bool False on failure / array Database rows on success
          */
-        public function select($query) {
+        public function select($query, $mode = MYSQLI_STORE_RESULT) {
             $rows = array();
-            $result = $this -> query($query);
+            $result = $this -> query($query, $mode);
             if($result === false) {
                 return false;
             }
             while ($row = $result -> fetch_assoc()) {
                 $rows[] = $row;
             }
+            
+            $result -> close();
+
             return $rows;
         }
 
