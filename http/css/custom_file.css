@@ -1,0 +1,13 @@
+#ipfs-hash {
+	background: #f3f3f3;
+	padding: 10px;
+	border-radius: 3px;
+}
+
+#ipfs-hash #hash-text {
+	font-weight: bold;
+	background: #ffffff;
+	padding: 4px 4px 4px 8px;
+	border-radius: 3px;
+	color: #4a4a4a;
+}

@@ -55,29 +55,44 @@
 <head>
 	<title>MONSITE</title>
 	<?php include "parts/general_head_includes.php"; ?>
+	<link rel="stylesheet" href="../../css/custom_file.css" />
 </head>
 <body>
 
 	<?php
 		include "./parts/header.php";
 	?>
-	<!-- crumbread TODO voir ex bootstrap-->
-	<div>
-		<?php
-			echo $global_arr["category"];
-			echo " > ";
-			echo $global_arr["subcategory"];
-			echo " > ";
-			echo $global_arr["file_title"];
-		?>
-	</div>
 
 	<div class="container">
+		<!-- Breadcrumb-->
+		<div class="row">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="#">
+						<?php
+							echo $global_arr["category"];
+						?>
+					</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="#">
+						<?php
+							echo $global_arr["subcategory"];
+						?>
+					</a>
+				</li>
+				<li class="breadcrumb-item active">
+					<?php
+						echo $global_arr["file_title"];
+					?>
+				</li>
+			</ol>
+		</div>
+
 		<div class="row">
 			<div class="col-md-6">
 				<h1 id="fileTitle"><?php echo $global_arr["file_title"];?></h1>
 			</div>
-			<!--<div class="col-md-6 align-right">-->
 			<div class="col-md-6 blockquote-reverse">	
 				<div id="uploadDate">
 					<em>Référencé le <?php echo $global_arr["file_upload_date"]; ?></em>
@@ -88,8 +103,8 @@
 		</div>
 		<hr />
 
-		<h2>Détails</h2>
 		<div class="row">
+			<h2>Détails</h2>
 			<!-- If a shortdesc is specified -->
 			<div id="shortDesc">
 				<h4 class="description">Description courte</h4>
@@ -131,17 +146,27 @@
 		</div>
 
 		<hr />
-		<h2>Liens et statistiques</h2>
 		<!-- Links and stats -->
 		<div class="row">
+			<h2>Liens et statistiques</h2>
 			<div id="hash">
 				<h4>Hash IPFS</h4>
 				<div id="ipfs-hash">
-					<?php
-						echo $global_arr["file_hash"]; 
-					?>
+					<span id="hash-text">
+						<?php
+							echo $global_arr["file_hash"]; 
+						?>
+					</span>
 					<!-- TODO Bouton copier -->
+					<br />
+					<br />
+					<div class="btn-group">
+						<button class="btn btn-primary"><span class="glyphicon glyphicon-copy"></span> Copier</button>
+						<button title="Le service IPFS doit être lancé sur votre machine" class="btn btn-primary"><span class="glyphicon glyphicon-cloud-download"></span> Télécharger en navigateur</button>
+						<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-save-file"></span> Mirroir HTTP ipfs.io</button>
+					</div>
 				</div>
+				<br />
 				<h4>Mirroir HTTP</h4>
 				<div>
 					<?php
@@ -160,9 +185,9 @@
 		</div>
 
 		<hr />
-		<h2>Commentaires des utilisateurs Monsite</h2>
 		<!-- TODO -->
 		<div class="row">
+			<h2>Commentaires des utilisateurs Monsite</h2>
 			Fonctionnalité à venir!
 		</div>
 	</div>
