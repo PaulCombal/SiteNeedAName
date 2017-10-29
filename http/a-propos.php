@@ -30,41 +30,45 @@
 <head>
 	<title>MONSITE - À propos</title>
 	<?php include "parts/general_head_includes.php"; ?>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+	<link href="css/custom_about.css" rel="stylesheet">
 </head>
 <body>
 
-<?php
+	<?php
 
-	include "./parts/header.php";
-?>
+		include "./parts/header.php";
+	?>
 
-<div class="mainWrapper">
+	<div class="container">
 
-	<h1>Qu'est-ce que Monsite?</h1>
+		<h2>Qu'est-ce que Monsite?</h2>
 
-	<h1>Comment utiliser Monsite?</h1>
+		Monsite est une plate-forme vous permettant de partager des fichiers avec le monde entier. Monsite n'héberge aucun fichier, ni aucun tracker sur ses serveurs, la distribution des fichiers se fait intégralement en peer-to-peer via le protocole IPFS. Monsite ne fait que répertorier des avis et commentaires sur les fichiers circulant sur le réseau.
 
-	<h1>Quelles sont les bonnes pratiques?</h1>
+		<h2>Comment utiliser Monsite?</h2>
 
-	<h1>Je n'ai toujours pas compris quelque chose...</h1>
+		Monsite vous permet d'effectuer des recherches parmi tous les fichiers indexés, et d'accéder au feedback de la communauté. Pour consulter les fichiers, aucune inscription n'est nécessaire. Pour soumettre un commentaire ou référencer un nouveau fichier, vous devez d'abord créer un compte et/ou vous connecter. Toutes ces actions sont disponibles dans le ruban en haut de page.
 
-	Depuis logtemps blala. Vous invite à participer à l'avènement d'un nouveau monde.Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in mi ipsum. Etiam viverra suscipit arcu, at tristique ligula tempor eu. Fusce posuere ullamcorper nulla, luctus congue purus posuere sit amet. In non neque sed augue consequat semper. Nunc nec ligula quis quam tempus tempus. Sed accumsan vel turpis et blandit. Ut non semper diam. Quisque congue diam a lacinia luctus. Cras mattis metus mauris, porttitor iaculis metus venenatis quis. Integer finibus a neque id fermentum. Curabitur tristique dolor in ligula hendrerit lacinia. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut tempus, ex sit amet viverra ultricies, erat magna rhoncus dui, id faucibus augue odio a arcu. Vestibulum varius feugiat arcu, eu suscipit lorem blandit non. Proin cursus elementum pulvinar. Nunc congue at ipsum eu faucibus.
+		<h2>Quelles sont les bonnes pratiques?</h2>
 
-	Nulla libero nisi, lacinia ut imperdiet eget, fermentum ut nibh. Pellentesque a laoreet mauris, nec egestas est. Praesent vel quam faucibus lorem eleifend sollicitudin sed tristique augue. Morbi a posuere tortor. Vestibulum nunc odio, ornare eu ligula a, dictum malesuada massa. Aliquam varius lectus sagittis massa congue finibus. Nullam pulvinar, orci eu consectetur aliquam, arcu libero lacinia massa, ut efficitur dolor libero tincidunt risus. Nulla vulputate, odio sit amet vehicula feugiat, nibh velit facilisis ipsum, sit amet fermentum quam odio eget erat.
+		Monsite ne prend aucunement part à la diffusion des fichiers répertoriés. Si vous souhaitez maintenir la disponibilité des fichiers en ligne, tout repose sur vous. TODO Lien vers getting started IPFS.
 
-	Cras consectetur, libero a eleifend sagittis, odio diam viverra arcu, et congue lorem nulla at diam. Nam dignissim ultrices erat, sit amet molestie massa tempor quis. Nullam finibus, leo at scelerisque semper, nisl neque porttitor elit, eget vehicula leo tellus in lectus. Curabitur mattis, odio id vestibulum vulputate, nulla lectus feugiat odio, ut placerat libero sapien ut sapien. Sed eu molestie leo, et tincidunt lacus. Nulla dignissim dapibus metus, sed dapibus est mattis vitae. Donec aliquet sapien vitae massa blandit sagittis. Quisque a ultrices enim, vitae lobortis sapien. Donec aliquet, risus at sagittis euismod, mi lacus elementum leo, id molestie sapien odio quis lectus.
+		<h2>Comment soutenir Monsite?</h2>
 
-	Mauris sodales fermentum pellentesque. Integer vehicula justo quis ipsum cursus tincidunt. Nulla interdum gravida nunc vitae consectetur. Fusce tempus nibh eros, at euismod quam finibus non. Pellentesque vulputate dapibus finibus. Aliquam libero diam, imperdiet vel euismod vel, condimentum id dui. Sed at quam id dui suscipit pretium non malesuada eros. Vivamus at maximus ex. Curabitur et justo ut nisi commodo rutrum. Nam tincidunt porta sapien a semper.
+		Monsite est open-source et ne collecte pas de personnelles. <a href="http://github.com/TODO" target="_blank">Aidez-nous à construire Monsite!</a> Sa construction vient de passionés impatients de voir ce que va devenir ce site! Monsite ne génère donc aucun revenu, nous comptons sur vos dons pour maintenir le site en activité!<br />
 
-	<br />
-	<br />
+		<!-- TODO img donate -->
 
-	<a href="javascript:history.back()">> Retour</a>
-</div>
+		<h2>Je n'ai toujours pas compris quelque chose...</h2>
 
-<?php
-	ob_end_flush();
-?>
+		Quelque chose vous échappe encore? Essayez de <a href="http://reddit.com/todo" target="_blank">poser votre question à la communauté</a>, ou contactez-nous par email: <a href="mailto:todo@todo.todo">todo@todo.todo</a>
+
+		<br />
+		<br />
+
+		<a href="javascript:history.back()">> Retour</a>
+	</div>
 
 </body>
 </html>
