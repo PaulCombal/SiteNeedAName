@@ -55,7 +55,9 @@
 <head>
 	<title>MONSITE</title>
 	<?php include "parts/general_head_includes.php"; ?>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.0/showdown.min.js"></script>
 	<link rel="stylesheet" href="../../css/custom_file.css" />
+	<script src="../../js/md2html.js"></script>
 </head>
 <body>
 
@@ -127,7 +129,7 @@
 		<!-- If a long description is specified -->
 		<div class="row">
 			<!-- If a longdesc is specified -->
-			<div id="shortDesc">
+			<div id="longDesc">
 				<h4 class="description">Description longue</h4>
 				<?php if (empty($global_arr["file_long_description"])) {
 					?>
@@ -138,10 +140,12 @@
 				}
 				else{
 					?>
+				<div id="text-longDesc">
 					<?php
 					echo $global_arr["file_long_description"];
 				}
 				?>
+				</div>
 			</div>
 		</div>
 
