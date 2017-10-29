@@ -88,7 +88,7 @@
 			                <h2 class="fs-title">Liens et hash</h2>
 			                <h3 class="fs-subtitle">Quels sont les fichiers à référencer?</h3>
 			                <input type="text" name="title" placeholder="Nom du fichier/dossier à référencer sur Monsite (requis)" required id="req1" maxlength="60" autofocus/>
-			                <input type="text" name="ipfs_hash" placeholder="Hash IPFS (requis)" id="req2"  maxlength="100"/>
+			                <input type="text" name="ipfs_hash" placeholder="Hash IPFS (requis, format: ipfs/abcd ou ipns/monsite.com)" id="req2"  maxlength="100"/>
 			                <input type="text" name="http_mirror" placeholder="Mirroir vers un site HTTP (optionnel)"  maxlength="255"/>
 			                <input type="button" name="previous" class="previous action-button-previous" value="Précédent"/>
 			                <input type="button" name="next" class="next action-button" value="Suivant" id="but1" disabled/>

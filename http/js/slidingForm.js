@@ -24,12 +24,22 @@ $(document).ready(()=>{
 
 	//Enable the "Next" button once all required fields are filled
 	function checkFirstFieldsFilled(){
-		//Todo, check ipfs hash regex
-		if($("#req1").val() != "" && $("#req2").val() != ""){
+		var correctRegex = $("#req2").val().match(/^\/?(ipfs|ipns)\/.+/) !== null
+
+		//If all fields hold correct values
+		if ($("#req1").val() != "" && correctRegex){
 			$("#but1").prop("disabled", false);
 		}
 		else{
 			$("#but1").prop("disabled", true);
+		}
+
+		//If the hash field holds correct values
+		if(!correctRegex) {
+			$("#req2").attr("style", "color: #ff504c;font-weight: bold;");
+		}
+		else {
+			$("#req2").removeAttr("style");
 		}
 	}
 
@@ -104,7 +114,6 @@ $(document).ready(()=>{
 
 	$("select[name=cat]").change(updateSubcategories);
 	$("select[name=subcat]").change(updateSubmitButton);
-
 
 
 	//********** Stock jQuery for front ***********//

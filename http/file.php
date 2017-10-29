@@ -55,9 +55,15 @@
 <head>
 	<title>MONSITE</title>
 	<?php include "parts/general_head_includes.php"; ?>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.0/showdown.min.js"></script>
 	<link rel="stylesheet" href="../../css/custom_file.css" />
+
+
+	<!-- Markdown to HTML Script -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.0/showdown.min.js"></script>
 	<script src="../../js/md2html.js"></script>
+
+	<!-- clipboard.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 </head>
 <body>
 
@@ -141,11 +147,11 @@
 				else{
 					?>
 				<div id="text-longDesc">
-					<?php
-					echo $global_arr["file_long_description"];
-				}
-				?>
+					<?php echo $global_arr["file_long_description"]; ?>
 				</div>
+					<?php
+					}
+				?>
 			</div>
 		</div>
 
@@ -165,9 +171,9 @@
 					<br />
 					<br />
 					<div class="btn-group">
-						<button class="btn btn-primary"><span class="glyphicon glyphicon-copy"></span> Copier</button>
-						<button title="Le service IPFS doit être lancé sur votre machine" class="btn btn-primary"><span class="glyphicon glyphicon-cloud-download"></span> Télécharger en navigateur</button>
-						<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-save-file"></span> Mirroir HTTP ipfs.io</button>
+						<a href="javascript:void(0)" data-clipboard-target="#hash-text" class="btn btn-primary"><span class="glyphicon glyphicon-copy"></span> Copier</a>
+						<a href="http://127.0.0.1:8080/<?php echo $global_arr['file_hash'];?>" target="_blank" title="Le service IPFS doit être lancé sur votre machine" class="btn btn-primary"><span class="glyphicon glyphicon-cloud-download"></span> Télécharger en navigateur</a>
+						<a href="http://ipfs.io/<?php echo $global_arr["file_hash"]; ?>" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-save-file"></span> Mirroir HTTP ipfs.io</a>
 					</div>
 				</div>
 				<br />
