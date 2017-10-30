@@ -41,8 +41,12 @@ header form {
 	text-decoration: none;
 }
 
-.row * {
-	font-size: medium;
+.dropdown-menu li {
+	border: none;
+}
+
+.row {
+    margin-bottom: 25px;
 }
 
 .shortcutIcons {
@@ -55,4 +59,22 @@ header form {
 
 a[hovered=true] {
 	color: #23527c;
+}
+
+.container {
+	margin-left: 94px;
+}
+
+.result-breadcrumb {
+	color: #006621;
+}
+
+.result-mainLink {
+	font-size: medium;
+}
+
+.result-description {
+	color: #545454;
+	line-height: 1.4;
+	word-wrap: break-word;
 }

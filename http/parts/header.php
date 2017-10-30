@@ -8,8 +8,8 @@
 		//TODO fixer cette accumulation de maj et faire un truc clean
 		$userLinks = '
 		<div class="dropdown">
-		  <li class="dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-		    	' . $_SESSION["username"] . '<span class="caret"></span>
+		  <li class="dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> '
+		    	. $_SESSION["username"] . ' <span class="caret"></span>
 		  </li>
 		  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
 		    <li><a href="' . $base . 'user/' . $_SESSION["username"] . '"><span class="glyphicon glyphicon-user"></span> Mon Profil Monsite</a></li>

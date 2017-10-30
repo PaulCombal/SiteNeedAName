@@ -4,7 +4,7 @@ USE `MyDatabase`;
 --
 -- Host: localhost    Database: MyDatabase
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.26-MariaDB
+-- Server version	5.5.5-10.1.28-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -152,9 +152,18 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getPostsBySearch`(IN searchText Text, IN category_id int(11), IN subcategory_id INT(11), IN resultsPerPage INT(11), IN pageNumber INT(11))
 BEGIN
 	SELECT
-    *
+		files.id AS `file_id`,
+		files.title AS `file_title`,
+		files.description AS `file_description`,
+		files.hash AS `file_hash`,
+		files.httpmirror AS `file_http_mirror`,
+		CONCAT("Dans ", categories.name, " > ", subcategories.name) AS `file_breadcrumb`
     FROM 
-    files
+		files
+		INNER JOIN
+        categories ON files.category_id = categories.id
+        INNER JOIN
+        subcategories ON categories.id = subcategories.category_id AND files.subcategory_id = subcategories.id
     WHERE
     INSTR(CONCAT_WS("", title, description), searchText) > 0;
 END ;;
@@ -234,4 +243,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-29 23:37:08
+-- Dump completed on 2017-10-31  0:20:24

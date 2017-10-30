@@ -35,7 +35,11 @@
 <head>
 	<title><?php echo $_GET["search"]; ?> - Recherche Monsite</title>
 	<?php include "parts/general_head_includes.php"; ?>
+	<!-- Custom CSS for the search page -->
 	<link rel="stylesheet" href="css/custom_search.css" />
+
+	<!-- Custom scripts (clipboard + hover) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 	<script src="./js/searchPage.js"></script>
 </head>
 <body>
@@ -58,18 +62,19 @@
 		foreach ($result as &$row) {
 			echo '<div class="row">';
 			#print_r($row);
-			echo '<a class="searchResultRow" href="./télécharger/' . $row['id'] . '/' . str_replace(" ", "-", $row['title']) . '">' . $row['title'] . '</a>';
+			echo '<a class="result-mainLink" href="./télécharger/' . $row['file_id'] . '/' . str_replace(" ", "-", $row['file_title']) . '">' . $row['file_title'] . '</a>';
 			
 			echo '<span class="shortcutIcons">';
-			echo '<a href="#"><span title="Copier le hash" class="glyphicon glyphicon-copy"></span></a>   ';
-			echo '<a href="#"><span title="TODOD" class="glyphicon glyphicon-cloud-download"></span></a>                ';
-			echo '<a href="#"><span title="TODODO" class="glyphicon glyphicon-save-file"></span></a>      ';
+			echo '<a href="#"><span title="Copier le hash" class="glyphicon glyphicon-copy" data-clipboard-text="' . $row['file_hash'] . '"></span></a> ';
+			echo '<a href="#"><span title="Télécharge en navigateur. IPFS doit être lancé sur votre ordinateur." class="glyphicon glyphicon-cloud-download"></span></a> ';
+			echo '<a href="#"><span title="Télécharger par le mirroir ipfs.io" class="glyphicon glyphicon-save-file"></span></a> ';
 			echo '<a href="#">TODO flags</a>';
 			echo '</span>';
 
 			echo "<br />";
-			echo '<div>TODO breadcrumb</div>';
-			echo '<div>' . $row["description"];
+			echo '<div class="result-breadcrumb">' . $row["file_breadcrumb"] . '</div>';
+			echo '<div class="result-description">' . $row["file_description"] . '</div>';
+
 			echo "</div>";
 		}
 
