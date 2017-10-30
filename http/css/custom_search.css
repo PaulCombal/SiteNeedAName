@@ -40,3 +40,20 @@ header form {
 .searchFilters li a:focus {
 	text-decoration: none;
 }
+
+.row * {
+	font-size: medium;
+}
+
+.shortcutIcons {
+	float: right;	
+}
+
+.shortcutIcons * {
+	margin: 0 2px;
+}
+
+a[hovered=true] {
+	color: #23527c;
+	text-decoration: underline;
+}
