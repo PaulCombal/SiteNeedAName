@@ -48,7 +48,8 @@
 	<div class="container">
 	
 	<?php
-
+		#TODO Review procedure to only return required fields
+		#with a correct name
 		$result = $db -> select ("CALL getPostsBySearch(" . $db -> quote($_GET["search"]) . ", NULL, NULL, NULL, NULL);");
 		if (count($result) === 0) {
 			die("<em>Aucun résultat trouvé.. Vous aurez peut-être plus de chance avec expression plus courte.</em>");
