@@ -55,7 +55,7 @@
                 <h3>Internet, libre</h3>
                 <span class="subdesc">IPFS, un réseau de réseau alternatif dont nous somme tous piliers</span>
 
-                <br><br>Images icones des fonctionnalités à mettre dans le carré<br><br><br>
+                <br><br>Placer ici des petites images ou icônes colorées<br><br><br>
 
                 <h3>La 1ere communauté française</h3>
                 <span class="subdesc">Monsite est la plateforme la plus populaire de partage de fichiers 100% peer-to-peer</span>

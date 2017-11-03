@@ -60,7 +60,7 @@
                     <!-- (mail) -->
                     <div class="form-group row">
                         <div>
-                            <input name="email" class="form-control" placeholder="Adresse e-mail ou nom d'utilisateur" data-minlength="3" data-error="Veuillez renseigner au moins trois caractères." required />
+                            <input name="email" class="form-control" placeholder="Adresse e-mail du compte" data-minlength="3" data-error="Veuillez renseigner au moins trois caractères." required />
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
