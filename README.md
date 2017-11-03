@@ -23,7 +23,20 @@ Login page:
 
 <img src="goodies/login_preview.png" alt="SiteNeedAName preview image" width="700"/>
 
-### Contributing
+## Installing
+
+1. Start the HTTP and MySQL (or MariaDB) services on your machine
+2. Make sure the Apache HTTP rewrite module is enabled to allow URL rewriting.
+3. Git clone this repository somewhere on your drive
+4. Run the SQL script on your machine (found in the "sql" folder at this repo's root)
+5. Modify the file "http/conf/db.conf.ini" to make it match your database's configuration
+6. Make the cloned "http" folder your http daemon's "http folder"
+  * What I did was symlinking /srv/http (may be /var/www for you) to the repo's "http" folder
+  * If you wish, to only see the result, you can simply copy the content of the "http" folder to the Apache "http folder"
+7. ????
+8. Profit
+
+## Contributing
 
 Please see TODO.md. There's a lot to do from here.
 
