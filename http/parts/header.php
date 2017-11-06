@@ -38,7 +38,11 @@
 	}
 
 	if (!strstr($_SERVER["PHP_SELF"], "index.php")) {
-		$logoLink = '<span class="navbar-text logoLink"><a href="'.$base.'index.php">LOGO</a></span>';
+		$logoLink = '<span class="navbar-text logoLink">'.
+						'<a href="'.$base.'index.php">'.
+							'<img src="'.$base.'images/logos/logo_120x44.png" alt="Logo monsite" class="logo120x44"/>'.
+						'</a>'.
+					'</span>';
 	}
 
 	if (strstr($_SERVER["PHP_SELF"], "search.php")) {

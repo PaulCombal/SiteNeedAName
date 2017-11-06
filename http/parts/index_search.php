@@ -1,6 +1,6 @@
 <div class="indexContainer">
 	<div class="mainLogo">
-		MONSITE
+		<img src="images/logos/logo_272x92.png" alt="Logo Monsite" />
 	</div>
 	<div class="searchBar">
 		<form action="./search.php" method="get">

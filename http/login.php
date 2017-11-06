@@ -48,7 +48,7 @@
 
             <!-- Login -->
             <div id="loginRow" class="row">
-                <a href="index.php">Minilogo</a>
+                <a href="index.php"><img src="images/logos/logo_120x44.png" alt="Logo Monsite" class="logo120x44"/></a>
                 
                 <div id="loginTitles">
                     <h2>Connexion</h2>

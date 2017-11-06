@@ -29,6 +29,13 @@ select.form-control {
     margin-top: 20px;
 }
 
+a.logoCenterFoot {
+    margin: 25px 0;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
 /* Downloaded shit starts here */
 /* see https://codepen.io/designify-me/pen/qrJWpG */
 
@@ -56,7 +63,7 @@ body {
 #msform {
     text-align: center;
     position: relative;
-    margin-top: 30px;
+    /*margin-top: 30px;*/
 }
 
 #msform fieldset {

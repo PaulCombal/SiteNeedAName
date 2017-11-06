@@ -18,7 +18,7 @@ header form {
 	clear: both !important;
 	bottom: 0;
 	position: absolute;
-	padding-left: 84px;
+	padding-left: 150px;
 	margin: 0;
 }
 
@@ -77,4 +77,9 @@ a[hovered=true] {
 	color: #545454;
 	line-height: 1.4;
 	word-wrap: break-word;
+}
+
+span.navbar-text.logoLink {
+	float: left;
+	margin: 0;
 }

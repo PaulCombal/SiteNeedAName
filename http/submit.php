@@ -66,6 +66,10 @@
             <!-- MultiStep Form -->
 			<div class="row">
 			    <div class="col-md-6 col-md-offset-3">
+					<a href="./" class="logoCenterFoot">
+						<img src="images/logos/logo_120x44.png" alt="Logo Monsite" class="logo120x44" />
+					</a>
+					
 			        <form id="msform" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
 			            <!-- progressbar -->
 			            <ul id="progressbar">
@@ -127,8 +131,6 @@
 			        	<br />
 			        	TODO ADD A LINK TO REPO HERE
 			        </div>
-			        <!-- Do something clean when putting an img for branding -->
-			        <a href="./" style="margin: 25px 0;display: inline-block;text-align: center;width: 100%;">MonLogo</a>
 			    </div>
 			</div>
 			<!-- /.MultiStep Form -->

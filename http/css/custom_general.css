@@ -1,5 +1,5 @@
 header{
-	min-width: 1050px;
+	min-width: 1120px;
 }
 
 header ul {
@@ -100,4 +100,9 @@ header .dropdown .glyphicon {
 
 .align-right {
 	text-align: right;
+}
+
+img.logo120x44 {
+	margin-left: 15px;
+	display: inline-block !important;
 }
