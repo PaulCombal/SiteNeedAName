@@ -31,7 +31,7 @@
 
 
 		//getFileByID is a Stored Procedure
-		#boarf, no need to quote or htmlspecialchar here, it passed the isnumeric test, right?
+		//boarf, no need to quote or htmlspecialchar here, it passed the isnumeric test, right?
 		$prettySQL = "CALL getFileByID(" . $file_id . ");";
 		try {
 			$result = $db -> select($prettySQL);
@@ -44,6 +44,21 @@
 		}
 
 		$global_arr = $result[0];
+
+		//Let's retrieve the flags now and append them to global_arr
+		//boarf, no need to quote or htmlspecialchar here, it passed the isnumeric test, right?
+		$prettySQL = "CALL getFlagsByFile(" . $file_id . ");";
+		try {
+			$result = $db -> select($prettySQL);
+		} catch (Exception $e) {
+			die("Error: " . $e->getMessage());
+		}
+
+		if (count($result) <> 1) {
+			throw new Exception("[Erreur 3] Incohérence de données", 1);
+		}
+
+		$global_arr = array_merge($global_arr, $result[0]);
 	}
 	catch(Exception $e)	{
 		die("Une erreur est survenue lors de la récupération des informations fichier :( <br>" . $e->getMessage());
@@ -176,6 +191,24 @@
 						<a href="http://ipfs.io/<?php echo $global_arr["file_hash"]; ?>" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-save-file"></span> Mirroir HTTP ipfs.io</a>
 					</div>
 				</div>
+				<br />
+
+				<h4>Votes</h4>
+				<div>
+					TODO faire une barre like youtube
+					<?php print_r($_SESSION); ?>
+					<br />
+					<div class="btn-group">
+						<a href="javascript:void(0)" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+						<a href="javascript:void(0)" title="Le fichier n'est pas conforme à la description ou est dangereux" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span> </a>
+					</div>
+					<br />
+					Votes Positifs: <?php echo $global_arr["likes"]; ?>
+					<br />
+					Votes Négatifs: <?php echo $global_arr["dislikes"]; ?>
+
+				</div>
+
 				<br />
 				<h4>Mirroir HTTP</h4>
 				<div>

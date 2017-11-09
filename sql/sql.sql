@@ -64,6 +64,27 @@ CREATE TABLE `files` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `flags`
+--
+
+DROP TABLE IF EXISTS `flags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `flags` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `flagType` enum('LIKE','DISLIKE','MODERATED','BANNED') COLLATE latin1_general_ci DEFAULT NULL COMMENT 'LIKE: User like the post\nDISLIKE: User disliked the post\nMODERATED: A moderator has manually checked the file and it can be trusted\nBANNED: The file is against the TOS and should not be shown again',
+  `user_id` int(11) unsigned NOT NULL,
+  `file_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_flags_1_idx` (`user_id`),
+  KEY `fk_flags_2_idx` (`file_id`),
+  CONSTRAINT `fk_flags_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_flags_2` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `subcategories`
 --
 
@@ -105,6 +126,25 @@ CREATE TABLE `users` (
 --
 -- Dumping routines for database 'MyDatabase'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `applyFlag` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `applyFlag`(IN flag_type_in ENUM('LIKE', 'DISLIKE', 'MODERATED', 'BANNED'), IN user_id_in INT(11), IN post_id_in INT(11))
+BEGIN
+	INSERT INTO flags (flagType, user_id, file_id) VALUES (flag_type_in, user_id_in, post_id_in);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `getFileById` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -133,6 +173,38 @@ BEGIN
 		INNER JOIN categories ON category_id = categories.id
 		INNER JOIN subcategories ON subcategory_id = subcategories.id AND subcategories.category_id = categories.id
         WHERE files.id = iId;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getFlagsByFile` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getFlagsByFile`(IN file_id_in INT(11))
+BEGIN
+	SELECT 
+    `likes`, 
+    `dislikes`,
+    `moderated`,
+    `banned`
+    FROM
+		(SELECT COUNT(*) AS `likes` FROM flags WHERE flags.file_id = file_id_in AND flags.flagType = 'LIKE') AS `likes`
+        ,
+        (SELECT COUNT(*) AS `dislikes` FROM flags WHERE flags.file_id = file_id_in AND flags.flagType = 'DISLIKE') AS `dislikes`
+        ,
+        (SELECT COUNT(*) > 0 AS `moderated` FROM flags WHERE flags.file_id = file_id_in AND flags.flagType = 'MODERATED') AS `moderated`
+		,
+        (SELECT COUNT(*) > 0 AS `banned` FROM flags WHERE flags.file_id = file_id_in AND flags.flagType = 'BANNED') AS `banned`
+	;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -243,4 +315,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-31  0:20:24
+-- Dump completed on 2017-11-09 17:22:03
