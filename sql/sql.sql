@@ -77,11 +77,12 @@ CREATE TABLE `flags` (
   `file_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `one_flag_per_user` (`flagType`,`user_id`,`file_id`),
   KEY `fk_flags_1_idx` (`user_id`),
   KEY `fk_flags_2_idx` (`file_id`),
   CONSTRAINT `fk_flags_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flags_2` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -315,4 +316,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-09 17:22:03
+-- Dump completed on 2017-11-12  0:53:07

@@ -37,7 +37,9 @@
 
             // Query the database
             $result = $connection -> query($query, $mode);
-            $connection -> next_result();
+            if ($connection -> more_results()) {
+                $connection -> next_result();
+            }
 
             return $result;
         }

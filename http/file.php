@@ -66,16 +66,34 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-file-id="<?php echo $file_id;?>">
 <head>
 	<title>MONSITE</title>
-	<?php include "parts/general_head_includes.php"; ?>
+	
+	<?php /* We will not use general head iincludes because we need the full jQuery version for POST requests*/ ?>
+
+	<?php $base = "http://" . $_SERVER["HTTP_HOST"] . "/"; ?>
+
+	<!-- Main CSS rules -->
+	<link rel="stylesheet" href="<?php echo $base; ?>css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<?php echo $base; ?>css/custom_general.css" />
+
+	<!-- Necessary scripts for jQuery and Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	
+	<!-- Custom files start here -->
+
+	<!-- CSS -->
 	<link rel="stylesheet" href="../../css/custom_file.css" />
 
-
-	<!-- Markdown to HTML Script -->
+	<!-- Markdown to HTML -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.0/showdown.min.js"></script>
 	<script src="../../js/md2html.js"></script>
+
+	<!-- Flagging -->
+	<script src="../../js/custom_file.js"></script>
 
 	<!-- clipboard.js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
@@ -199,8 +217,8 @@
 					<?php print_r($_SESSION); ?>
 					<br />
 					<div class="btn-group">
-						<a href="javascript:void(0)" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-						<a href="javascript:void(0)" title="Le fichier n'est pas conforme à la description ou est dangereux" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span> </a>
+						<a id="likeBut" href="javascript:void(0)" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+						<a id="dislikeBut" href="javascript:void(0)" title="Le fichier n'est pas conforme à la description ou est dangereux" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span> </a>
 					</div>
 					<br />
 					Votes Positifs: <?php echo $global_arr["likes"]; ?>
