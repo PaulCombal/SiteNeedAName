@@ -51,11 +51,13 @@ $(document).ready(() => {
 
 	/** Instructions start here */
 
-	$("#likeBut").click(() => {
+	$("#likeBut").click(function() {
 		sendFlag("like");
+		$(this).toggleClass("active");
 	});
 
-	$("#dislikeBut").click(() => {
+	$("#dislikeBut").click(function(){
 		sendFlag("dislike");
+		$(this).toggleClass("active");
 	});
 });

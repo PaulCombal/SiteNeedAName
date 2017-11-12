@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	
+
 	/* Validate data received from client */
 	if (!isset($_SESSION["userid"]) OR empty($_SESSION["userid"])) {
 		die(
@@ -32,14 +32,43 @@
 	$user_id = $db -> quote ($_SESSION["userid"]);
 	$file_id = $db -> quote ($_POST["fileid"]);
 
-	// We use the applyFlag procedure
 	switch ($_POST["action"]) {
 		case 'like':
 			$db -> query("CALL applyFlag('LIKE', " . $user_id . ", " . $file_id . ");");
+			
+			die(
+				json_encode(
+					[
+						"print" => false,
+						"content" => "File like request acknowledged."
+					]
+				)
+			);
+			break;
+
+		case 'dislike':
+			$db -> query("CALL applyFlag('DISLIKE', " . $user_id . ", " . $file_id . ");");
+			
+			die(
+				json_encode(
+					[
+						"print" => false,
+						"content" => "File dislike request acknowledged."
+					]
+				)
+			);
 			break;
 		
 		default:
-			die("[Error 1] Action inconnue");
+			die(
+				json_encode(
+					[
+						"print" => false,
+						"error" => true,
+						"content" => "Unrecognized action."
+					]
+				)
+			);
 			break;
 	}
 ?>

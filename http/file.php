@@ -59,10 +59,59 @@
 		}
 
 		$global_arr = array_merge($global_arr, $result[0]);
+		$global_arr["user_is_logged_in"] = isset($_SESSION["userid"]) && !empty($_SESSION["userid"]) && is_numeric($_SESSION["userid"]);
+
+		//If user is logged in, we want to retrieve the flags already applied by the currently logged in user
+		$is_file_liked = false;
+		$is_file_disliked = false;
+		$is_file_moderated = false;
+		$is_file_banned = false;
+
+		if ($global_arr["user_is_logged_in"]) {
+			$prettySQL = "CALL getFlagsByUserAndFile(" . $_SESSION["userid"] . ", " . $file_id . ");";
+			
+			try {
+				$result = $db -> select($prettySQL);
+
+				foreach ($result as $flag) {
+					switch ($flag["flagType"]) {
+					 	case 'LIKE':
+					 		$is_file_liked = true;
+					 		break;
+
+					 	case 'DISLIKE':
+					 		$is_file_disliked = true;
+					 		break;
+
+						case 'BANNED':
+					 		$is_file_banned = true;
+					 		break;
+
+					 	case 'MODERATED':
+					 		$is_file_moderated = true;
+					 		break;
+
+					 	default:
+					 		# code...
+					 		break;
+					 }
+				}
+
+			} catch (Exception $e) {
+				die("Error: " . $e->getMessage());
+			}
+		}
 	}
 	catch(Exception $e)	{
 		die("Une erreur est survenue lors de la récupération des informations fichier :( <br>" . $e->getMessage());
 	}
+
+	// We are officially DONE with preloading we now know about:
+
+	// * The file itself, everything needed is in global_arr
+	// * If we are a logged in user, in global_arr
+	// * The overall flags applied to this file (number of likes, dislikes, etc), in global_arr
+	// * The flags applied by ourself, if we are logged, in vars like is_file_*
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +119,7 @@
 <head>
 	<title>MONSITE</title>
 	
-	<?php /* We will not use general head iincludes because we need the full jQuery version for POST requests*/ ?>
+	<?php /* We will not use general head includes because we need the full jQuery version for POST requests*/ ?>
 
 	<?php $base = "http://" . $_SERVER["HTTP_HOST"] . "/"; ?>
 
@@ -131,10 +180,22 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-6">
-				<h1 id="fileTitle"><?php echo $global_arr["file_title"];?></h1>
+			<div class="col-md-7">
+				<h1 id="fileTitle">
+					<?php 
+						echo $global_arr["file_title"]; 
+						if($is_file_banned) 
+							echo " - [FICHIER BANNI PAR VOUS-MÊME]";
+						if($is_file_moderated) 
+							echo " - [FICHIER APPROUVÉ PAR VOUS-MÊME]"; 
+					?>
+				</h1>
+				<?php 
+					if($global_arr["moderated"]) echo '<h3><span class="glyphicon glyphicon-ok"></span> Fichier vérifié manuellment</h3>'; /* TODO Style + explications */ 
+					if($global_arr["banned"]) echo '<h3><span class="glyphicon glyphicon-warning-sign"></span> Fichier BANNI</h3>'; /* TODO Style + explications */ 
+				?>
 			</div>
-			<div class="col-md-6 blockquote-reverse">	
+			<div class="col-md-5 blockquote-reverse">	
 				<div id="uploadDate">
 					<em>Référencé le <?php echo $global_arr["file_upload_date"]; ?></em>
 				</div>
@@ -214,11 +275,10 @@
 				<h4>Votes</h4>
 				<div>
 					TODO faire une barre like youtube
-					<?php print_r($_SESSION); ?>
 					<br />
 					<div class="btn-group">
-						<a id="likeBut" href="javascript:void(0)" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-						<a id="dislikeBut" href="javascript:void(0)" title="Le fichier n'est pas conforme à la description ou est dangereux" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down"></span> </a>
+						<a id="likeBut" href="javascript:void(0)" class="btn btn-primary<?php if($is_file_liked) echo " active"; ?>"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+						<a id="dislikeBut" href="javascript:void(0)" title="Le fichier n'est pas conforme à la description ou est dangereux" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down<?php if($is_file_disliked) echo " active"; ?>"></span> </a>
 					</div>
 					<br />
 					Votes Positifs: <?php echo $global_arr["likes"]; ?>
