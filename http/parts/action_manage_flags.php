@@ -28,7 +28,7 @@
 
 				error (boolean, optionnal)
 					If set to true, the callback will not be called, a generic error will be shown to the user, and content will
-					be logged in the JS console.
+					be logged in the JS console. Usually used when a technical issue occurred.
 	*/
 
 
@@ -53,7 +53,8 @@
 			json_encode(
 				[
 					"print" => false,
-					"content" => "[Erreur 0] Entrée incorrecte"
+					"error" => true,
+					"content" => "[Erreur 0] Entrée incorrecte."
 				]
 			)
 		);
@@ -68,7 +69,7 @@
 
 	switch ($_POST["action"]) {
 		case 'like':
-			$db -> query("CALL applyFlag('LIKE', " . $user_id . ", " . $file_id . ");");
+			$db -> query("CALL toggleFlag('LIKE', " . $user_id . ", " . $file_id . ");");
 			
 			die(
 				json_encode(
@@ -81,7 +82,7 @@
 			break;
 
 		case 'dislike':
-			$db -> query("CALL applyFlag('DISLIKE', " . $user_id . ", " . $file_id . ");");
+			$db -> query("CALL toggleFlag('DISLIKE', " . $user_id . ", " . $file_id . ");");
 			
 			die(
 				json_encode(

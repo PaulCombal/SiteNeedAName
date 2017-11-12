@@ -63,7 +63,7 @@ $(document).ready(() => {
 				}
 			}
 			catch (e) {
-				console.log("Invalid JSON received");
+				console.log("Invalid JSON received.");
 				console.log(data);
 				console.log(e);
 				alertError();
