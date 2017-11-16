@@ -73,7 +73,7 @@
 			try {
 				$result = $db -> select($prettySQL);
 
-				foreach ($result as $flag) {
+				foreach ($result as &$flag) {
 					switch ($flag["flagType"]) {
 					 	case 'LIKE':
 					 		$is_file_liked = true;
@@ -92,7 +92,7 @@
 					 		break;
 
 					 	default:
-					 		# code...
+					 		# Nothing. Improve error handling here?
 					 		break;
 					 }
 				}
@@ -274,18 +274,32 @@
 
 				<h4>Votes</h4>
 				<div>
-					TODO faire une barre like youtube
 					<br />
+
+					<!-- Flag buttons group -->
 					<div class="btn-group">
 						<a id="likeBut" href="javascript:void(0)" class="btn btn-primary<?php if($is_file_liked) echo " active"; ?>"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-						<a id="dislikeBut" href="javascript:void(0)" title="Le fichier n'est pas conforme à la description ou est dangereux" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-down<?php if($is_file_disliked) echo " active"; ?>"></span> </a>
+						<a id="dislikeBut" href="javascript:void(0)" title="Le fichier n'est pas conforme à la description ou est dangereux" class="btn btn-primary<?php if($is_file_disliked) echo " active"; ?>"><span class="glyphicon glyphicon-thumbs-down"></span> </a>
 					</div>
-					<br />
-					Votes Positifs: <?php echo $global_arr["likes"]; ?>
-					<br />
-					Votes Négatifs: <?php echo $global_arr["dislikes"]; ?>
 
-				</div>
+					<!-- Like / dislike ratio bar -->
+					<table id="likeRatio">
+						<tr>
+							<th class="numberLikes">
+								<?php echo $global_arr["likes"]; ?>
+							</th>
+							<th class="likeProgressBarColumn">
+								<div id="likeProgressBar" class="progress" data-initial-likes="<?php echo $global_arr["likes"]; ?>" data-initial-dislikes="<?php echo $global_arr["dislikes"]; ?>">
+									<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+									<span class="sr-only">0% liked</span>
+									</div>
+								</div>
+							</th>
+							<th class="numberDislikes">
+								<?php echo $global_arr["dislikes"]; ?>
+							</th>
+						</tr>
+					</table>
 
 				<br />
 				<h4>Mirroir HTTP</h4>

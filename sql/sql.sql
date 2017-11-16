@@ -82,7 +82,7 @@ CREATE TABLE `flags` (
   KEY `fk_flags_2_idx` (`file_id`),
   CONSTRAINT `fk_flags_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flags_2` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,6 +329,25 @@ BEGIN
     
     IF is_flag_already_applied IS NULL THEN
 		#If not in the database then add it
+        
+        #First we have to check for incompatible flags
+        #eg: Like and dislike, can't do both at the same time
+        # We recycle the older variable
+        IF flag_type_in = 'LIKE' THEN
+			#IF the flag to apply is LIKE and user already DISLIKEd
+			SET is_flag_already_applied = (SELECT id FROM flags WHERE flagType = 'DISLIKE' AND user_id = user_id_in AND file_id = file_id_in LIMIT 1);
+			IF is_flag_already_applied IS NOT NULL THEN
+				DELETE FROM flags WHERE ID = is_flag_already_applied;
+			END IF;
+		ELSEIF flag_type_in = 'DISLIKE' THEN
+			#IF the flag to apply is DISLIKE and user already LIKEd
+			SET is_flag_already_applied = (SELECT id FROM flags WHERE flagType = 'LIKE' AND user_id = user_id_in AND file_id = file_id_in LIMIT 1);
+			IF is_flag_already_applied IS NOT NULL THEN
+				DELETE FROM flags WHERE ID = is_flag_already_applied;
+			END IF;
+        END IF;
+        
+        #In all cases, we need to insert the new flag
 		INSERT INTO flags (flagType, user_id, file_id) VALUES (flag_type_in, user_id_in, file_id_in);
 	ELSE
 		#Remove the flag
@@ -350,4 +369,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-12 17:08:05
+-- Dump completed on 2017-11-16 15:41:46

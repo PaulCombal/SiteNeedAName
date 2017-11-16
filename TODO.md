@@ -7,8 +7,9 @@
 * [ ] Liens de suggestion fonctionnels
 * [ ] Page de recherche absolument niquel techniquement et visuellement
 * [ ] Utiliser des procédures stockées pour action_login et action_register
-* [ ] User ne peut avoir un 'like' et un 'dislike' pour un même fichier
-* [ ] Tous les flags doivent être togglable, pour le moment on ne peut qu'en ajouter.
+* [x] User ne peut avoir un 'like' et un 'dislike' pour un même fichier
+* [x] Tous les flags doivent être togglable, pour le moment on ne peut qu'en ajouter.
+* [ ] Rediriger vers la dernière page consultée après connexion
 
 
 ===> v 0.1

@@ -1,10 +1,43 @@
 $(document).ready(() => {
 
-	/** File global */
+	/** File global variables */
 	var file_id = $("html").data("file-id");
+	var number_of_likes = 0;
+	var number_of_dislikes = 0;
 
+	number_of_dislikes = parseInt($("#likeProgressBar").data("initial-dislikes"));
+	number_of_likes = parseInt($("#likeProgressBar").data("initial-likes"));
 
 	/** Functions declarations */
+
+	/**
+	* updateProgressBar
+	*   Updates the progress bar to show the correct percentage
+	* @return 
+	*    void
+	*/
+	function updateProgressBar() {
+		var percentage = number_of_dislikes === 0 ? 100 : Math.round(number_of_likes / number_of_dislikes) * 100;
+		if (number_of_likes === 0 && number_of_dislikes === 0)
+			percentage = 50;
+
+		// The real progress bar
+		$("#likeProgressBar")
+			.find(".progress-bar")
+			.attr("aria-valuenow", percentage)
+			.attr("style", "width: " + percentage +"%;")
+		.parent()
+			.find(".sr-only")
+			.text(percentage + "% liked");
+
+		// The numbers on the left & right
+		$("#likeRatio")
+			.find(".numberLikes")
+			.text(number_of_likes)
+		.parent()
+			.find(".numberDislikes")
+			.text(number_of_dislikes);
+	}
 
 	/**
 	* alertError
@@ -77,17 +110,53 @@ $(document).ready(() => {
 
 	/** Instructions start here */
 
+	updateProgressBar();
+
 	$("#likeBut").click(function() {
 		sendFlag(
 			"like", 
-			() => {$(this).toggleClass("active");}
+			() => {
+				// Would have liked $.toggleClass(), but we can't know if removed or added
+
+				if ($(this).hasClass("active")) {
+					$(this).removeClass("active");
+					number_of_likes--;
+				}
+				else {
+					$(this).addClass("active");
+					number_of_likes++;
+
+					if ($("#dislikeBut").hasClass("active")) {
+						$("#dislikeBut").removeClass("active");
+						number_of_dislikes--;
+					}
+				}
+				updateProgressBar();
+			}
 		);
 	});
 
 	$("#dislikeBut").click(function(){
 		sendFlag(
 			"dislike", 
-			() => {$(this).toggleClass("active");}
+			() => {
+				// Would have liked $.toggleClass(), but we can't know if removed or added
+
+				if ($(this).hasClass("active")) {
+					$(this).removeClass("active");
+					number_of_dislikes--;
+				}
+				else {
+					$(this).addClass("active");
+					number_of_dislikes++;
+
+					if($("#likeBut").hasClass("active")) {
+						$("#likeBut").removeClass("active");
+						number_of_likes--;
+					}
+				}
+				updateProgressBar();
+			}
 		);
 	});
 });

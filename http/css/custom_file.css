@@ -11,3 +11,28 @@
 	border-radius: 3px;
 	color: #4a4a4a;
 }
+
+#likeProgressBar {
+	margin-bottom: 0;
+	height: 10px;
+}
+
+#likeRatio {
+	margin: 10px 0;
+}
+
+#likeRatio th {
+	padding: 0 5px;
+}
+
+.likeProgressBarColumn {
+	width: 250px;
+}
+
+.numberLikes {
+	color: green;
+}
+
+.numberDislikes {
+	color: #d45858;
+}
