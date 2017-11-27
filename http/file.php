@@ -117,7 +117,7 @@
 <!DOCTYPE html>
 <html lang="fr" data-file-id="<?php echo $file_id;?>">
 <head>
-	<title>MONSITE</title>
+	<title><?php echo $global_arr["file_title"]; ?> | MONSITE</title>
 	
 	<?php /* We will not use general head includes because we need the full jQuery version for POST requests*/ ?>
 

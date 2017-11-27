@@ -83,6 +83,47 @@
                         </div>
                     </div>
 
+                    <!-- (hidden field: redirect to this URL after successful login) -->
+                    <?php 
+
+                        function sameOrigin($ref, $host, $scheme)
+                        {
+                            # There HAS to be a smarter way
+                            return substr($ref, 0, strlen($host) + strlen($scheme) + 3) === $scheme . "://" . $host;
+                        }
+
+                        #If user failed to login and has been redirected by this page, we do not want a redirection to this page
+                        # so we keep the last one
+                        if(isset($_POST["redirectURL"])) {
+                            $redirectURL = $_POST["redirectURL"];
+                        }
+                        #If the http host name is available
+                        else if (isset($_SERVER["HTTP_HOST"])) {
+
+                            if(isset($_SERVER["REQUEST_SCHEME"])) {
+                                # We redirect to the last visited page, if the last visited page was on this website
+                                if(isset($_SERVER["HTTP_REFERER"]) &&  
+                                   sameOrigin($_SERVER["HTTP_REFERER"], $_SERVER["HTTP_HOST"], $_SERVER["REQUEST_SCHEME"])) {
+                                    
+                                    $redirectURL = $_SERVER["HTTP_REFERER"];
+                                } 
+                                # The last visited page is not available, or was not on this website
+                                else {
+                                    $redirectURL = $_SERVER["REQUEST_SCHEME"] . "://" . $_SERVER["HTTP_HOST"];
+                                }
+                            }
+                            else {
+                                # The HTTP scheme is not available. Ancient browser, developer, or crawler here
+                                $redirectURL = $_SERVER["PHP_SELF"];
+                            }
+                        }
+                        else {
+                            # The HTTP host name is not available. Ancient browser, developer, or crawler here
+                            $redirectURL = $_SERVER["PHP_SELF"];
+                        }
+                    ?>
+                    <input type="hidden" name="redirectURL" value="<?php echo $redirectURL; ?>">
+
                     <!-- (submit) -->
                     <div class="form-group row">
                         <div>

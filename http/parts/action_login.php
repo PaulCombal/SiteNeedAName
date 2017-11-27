@@ -14,6 +14,7 @@
 			
 			$password = $db -> quote(htmlspecialchars($_POST['password']));
 			$email = $db -> quote(htmlspecialchars($_POST['email']));
+			$referred_url = htmlspecialchars($_POST['redirectURL']);
 
 			if(valid_password(htmlspecialchars($_POST['password']))) {
 				$result = $db -> select("SELECT `id`,`username`,`password`,`email` FROM `users` WHERE `email`=".$email."");
@@ -27,7 +28,13 @@
 						$_SESSION["userid"] = $result[0]['id'];
 						$_SESSION["key"] = $key;
 
-						header("Location: ../../index.php");
+
+						if (filter_var($referred_url, FILTER_VALIDATE_URL)) {
+							header("Location: " . $referred_url);
+						}
+						else {
+							header("Location: ../../index.php");
+						}
 					} else {
 						exit(form_feedback("Mauvais mot de passe ou nom d'utilisateur."));
 					}
