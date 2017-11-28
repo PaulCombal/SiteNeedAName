@@ -3,7 +3,7 @@ If ever you need to update this dump, here's the way I always do it.
 * Open MySQL Workbench
 * Data Export
 * Select Structure only
-* Check "Include funtions and stored procedures"
+* Check "Include functions and stored procedures"
 * Check "Include create schema"
 * Check "Create dump in single Transaction"
 

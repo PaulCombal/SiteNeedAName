@@ -17,17 +17,16 @@
 			$referred_url = htmlspecialchars($_POST['redirectURL']);
 
 			if(valid_password(htmlspecialchars($_POST['password']))) {
-				$result = $db -> select("SELECT `id`,`username`,`password`,`email` FROM `users` WHERE `email`=".$email."");
+				$result = $db -> select("CALL getUserByMailOrLogin(" . $email . ");");
 				if(count($result) != 0) {
 					if (password_verify($password, $result[0]['password'])) {
-						$key = md5(uniqid(rand(), true));
-						$db -> query("UPDATE `users` SET `tempkey`='".$key."' WHERE `email`=".$email."");
-
 						$_SESSION["username"] = $result[0]['username'];
 						$_SESSION["email"] = $result[0]['email'];
 						$_SESSION["userid"] = $result[0]['id'];
 						$_SESSION["key"] = $key;
 
+						$key = md5(uniqid(rand(), true));
+						$db -> query("CALL updateTempkey(" . $_SESSION["userid"] . ", '" . $key . "');");
 
 						if (filter_var($referred_url, FILTER_VALIDATE_URL)) {
 							header("Location: " . $referred_url);

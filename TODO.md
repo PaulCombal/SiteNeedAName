@@ -2,7 +2,7 @@
 * [x] Recette URL rewriting
 * [x] Ajouter les scripts SQL de création de base
 * [x] Page users
-* [ ] Flags Post
+* [x] Flags Post (Like / dislike)
 * [ ] Regex IPFS hashs et mirroirs HTTP côté client + serveur
 * [ ] Liens de suggestion fonctionnels
 * [ ] Page de recherche absolument niquel techniquement et visuellement
@@ -14,7 +14,14 @@
 
 ===> v 0.1
 
-* [ ] S'intéresser à la sécurité
 * [ ] Rang des membres (Admins et modos, déjà commencé)
+* [ ] Flags posts (ban / modérer)
+* [ ] Mise en place de commentaires utilisateurs pour chaque fichier
+* [ ] Utiliser la 'tempkey' lors de la soumission d'un fichier / commentaire
+* [ ] Établissement d'un système de karma primitif
+
 
 ===> v 0.2
+
+* [ ] S'intéresser à la sécurité
+* [ ] Demander du feedback, quelles questions ont été posées + corriger
