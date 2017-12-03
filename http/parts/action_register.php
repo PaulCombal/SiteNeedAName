@@ -15,7 +15,6 @@
 		$toValidatePassword = $db -> quote(htmlspecialchars($_POST['tovalidatepassword']));
 		$email = $db -> quote(htmlspecialchars($_POST['email']));
 		$username = $db -> quote(htmlspecialchars($_POST['username']));
-		$mysql_date = $db -> quote(date('Y-m-d'));
 
 		if(valid_register_postdata()) {
 			if(!is_temp_mail(htmlspecialchars($_POST['email']))) {
@@ -25,17 +24,16 @@
 							$hashed_password = password_hash($password, PASSWORD_BCRYPT);
 							$key = md5(uniqid(rand(), true));
 
-							$result = $db -> query("INSERT INTO `users` (`email`, `reg_date`, `username`, `password`, `tempkey`) VALUES (" . $email . "," .$mysql_date . "," . $username.",'".$hashed_password ."','".$key ."')"); 
-							$userid = $db -> select("SELECT `id` FROM `users` WHERE `email`=".$email."");
+							$result = $db -> select("CALL createNewUser(" . $email . ", " . $username . ", '" . $hashed_password . "', '" . $key . "');"); 
 
 							$_SESSION["username"] = htmlspecialchars($_POST['username']);
 							$_SESSION["email"] = htmlspecialchars($_POST['email']);
-							$_SESSION["userid"] = $userid[0]['id'];
+							$_SESSION["userid"] = $result[0]['user_id'];
 							$_SESSION["key"] = $key;
 
 							#'Headers already sent by' may occur
 							#header("Location: ../../index.php");
-							echo '<script>window.location.replace(window.location.origin)</script>';
+							//echo '<script>window.location.replace(window.location.origin)</script>';
 						} else {
 							exit(form_feedback("Cette adresse e-mail ou nom d'utilisateur existent déjà."));
 						}
@@ -106,10 +104,10 @@
 	 * @return boolean.
 	 */
 	function already_registered($mail, $username, $db) {
-		$mailresult = $db -> select("SELECT `email` FROM `users` WHERE `email`=".$mail."");
-		$userresult = $db -> select("SELECT `username` FROM `users` WHERE `username`=".$username."");
-		if(count($mailresult) == 0 && count($userresult) == 0) return false;
-		return true;
+		#Arguments already quoted
+		$result = $db -> select("CALL isAlreadyRegistered(" . $username . ", " . $mail . ");");
+		if($result[0]["alreadyRegistered"] == 1) return true;
+		return false;
 	}
 
 	/**
