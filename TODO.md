@@ -3,7 +3,7 @@
 * [x] Ajouter les scripts SQL de création de base
 * [x] Page users
 * [x] Flags Post (Like / dislike)
-* [ ] Regex IPFS hashs et mirroirs HTTP côté client + serveur
+* [x] Regex IPFS hashs et mirroirs HTTP côté client + serveur
 * [ ] Liens de suggestion fonctionnels
 * [ ] Page de recherche absolument niquel techniquement et visuellement
 * [x] Utiliser des procédures stockées pour action_login et action_register
@@ -26,3 +26,4 @@
 
 * [ ] S'intéresser à la sécurité
 * [ ] Demander du feedback, quelles questions ont été posées + corriger
+* [ ] Recette validation des données

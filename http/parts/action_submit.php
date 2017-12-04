@@ -1,4 +1,5 @@
 <?php
+	# This file is included from the submit page. No need to specify path from parent folder
 	include_once "libs/database.php";
 
 	date_default_timezone_set('Europe/Paris');
@@ -6,19 +7,20 @@
 	/**
 	 * Starts the submit process.
 	 * Post data HAS to be valid at this point
-	 *
+	 * TODO : Use show_error_message more often instead of generic error
 	 */
 	function submit() {
 		$db = new Db();
 
 		// Directly related to the database. Do not change unless you
-		//Also modify the database length
+		// also modify the database data types
 		define('MAX_TITLE_LENGTH', 60);
 		define('MAX_DESCRIPTION_LENGTH', 60);
 		define('MAX_LONGDESCRIPTION_LENGTH', 5000);
 		define('MAX_HASH_LENGTH', 100);
 		define('MAX_HTTPMIRROR_LENGTH', 255);
 		define('SHOW_DEFAULT_ERROR_MESSAGE', '<script>$("#errorDiv").removeAttr("style");</script>');
+		define('IPFS_IPNS_REGEX_VALIDATOR', '/^\/ipfs\/Qm[1-9A-HJ-NP-Za-km-z]{44}(\/.*)?|^\/ipns\/.+/');
 		
 		# Required values
 		$title = $db -> quote(htmlspecialchars($_POST['title']));
@@ -27,18 +29,17 @@
 		$subcatgeroy_id = $db -> quote(htmlspecialchars($_POST['subcat']));
 
 		# Optional values
-		$http_mirror = (isset($_POST['http_mirror']) AND !empty($_POST['http_mirror'])) ? $db -> quote(htmlspecialchars($_POST['http_mirror'])) : "NULL";
-		
-		$short_desc = (isset($_POST['short_desc']) AND !empty($_POST['short_desc'])) ? $db -> quote(htmlspecialchars($_POST['short_desc'])) : "NULL";
+		$http_mirror = (isset($_POST['http_mirror']) AND !empty($_POST['http_mirror'])) ? $db -> quote(htmlspecialchars($_POST['http_mirror'])) : false;
+		$short_desc = (isset($_POST['short_desc']) AND !empty($_POST['short_desc'])) ? $db -> quote(htmlspecialchars($_POST['short_desc'])) : false;
+		$long_desc = (isset($_POST['long_desc']) AND !empty($_POST['long_desc'])) ? $db -> quote(htmlspecialchars($_POST['long_desc'])) : false;
 
-		$long_desc = (isset($_POST['long_desc']) AND !empty($_POST['long_desc'])) ? $db -> quote(htmlspecialchars($_POST['long_desc'])) : "NULL";
-
-		#Users accessing this page must be logged
+		# Users accessing this page must be logged
+		# There shouldn't be any issue with session vars, but here goes nothing
 		$mySafeUserID = $_SESSION["userid"];
-		#There shouldn't be any issue with session vars, but here goes nothing
 		if(!is_numeric($mySafeUserID))
 			die("Something fucked up bad");
-		
+
+		# We make sure the data length is correct	
 		if (smaller_length($title, MAX_TITLE_LENGTH) And 
 			smaller_length($ipfs_hash, MAX_HASH_LENGTH) And
 			smaller_length($http_mirror, MAX_HTTPMIRROR_LENGTH) And
@@ -52,8 +53,22 @@
 			die(SHOW_DEFAULT_ERROR_MESSAGE);
 		}
 
-		#TODO regex checks on hash / http mirror
+		# Regex checks on hash / http mirror
+		# We're not using our $ipfs_hash variable, because it's quoted
+		if (preg_match(IPFS_IPNS_REGEX_VALIDATOR, $_POST['ipfs_hash']) !== 1) {
+			# There are 0 matches, given hash is not a ipfs hash, or an error occurred.
+			# If incorrect please open an issue or make a pull request.
 
+			die(SHOW_DEFAULT_ERROR_MESSAGE);
+		}
+
+		if ($http_mirror !== false AND !filter_var($_POST['http_mirror'], FILTER_VALIDATE_URL)) {
+			# An HTTP mirror is specified, but does not pass validation
+			die(SHOW_DEFAULT_ERROR_MESSAGE);
+		}
+
+
+		#TODO Use a stored procedure
 		#If the below code is executed, this means the post data is well formatted
 		$prettySQL = "INSERT INTO `files` (`category_id`, `subcategory_id`, `title`, `description`, `longdescription`, `uploaddate`, `hash`, `httpmirror`, `user_id`) VALUES(" . $category_id . ", " . $subcatgeroy_id . ", " . $title . ", " . $short_desc . ", " . $long_desc . ", NOW(), " . $ipfs_hash . ", " . $http_mirror . ", " . $mySafeUserID . ");";
 
@@ -78,7 +93,7 @@
 	 */
 	function smaller_length($value, $length) {
 		# If an optional field has not been filled, pass the check anyway
-		if($value === "NULL")
+		if($value === false)
 			return true;
 		else
 			return is_string($value) and strlen($value) <= $length + 2; //+2 => mind the quotes
@@ -106,7 +121,7 @@
 				break;
 			
 			default:
-				$errorMessage = "Une erreur inconnue s'est produite, informez les développeurs que vous avez vous ce message: " . $message;
+				$errorMessage = "Une erreur inconnue s'est produite, veuillez informer les développeurs de ce problème. Message d'erreur: " . $message;
 				break;
 		}
 

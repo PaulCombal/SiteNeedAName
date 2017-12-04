@@ -16,35 +16,62 @@ const subcatOthers = []; //TODO
 $(document).ready(()=>{
 	
 	//*********** Validation / custom jQuery ************//
+	function isUrlValid(url) {
+		return /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+	}
+
+	function isHashValid(hash) {
+		return /^\/ipfs\/Qm[1-9A-HJ-NP-Za-km-z]{44}(\/.*)?|^\/ipns\/.+/.test(hash);
+	}
+
+
+
 	//Show the long desc field once desired
-	$("a#showLongDescField").click(()=>{
+	$("a#showLongDescField").click(function(){
 		$(".hiddenField").removeAttr("style");
-		$("a#showLongDescField").remove();
+		$(this).remove();
 	});
 
 	//Enable the "Next" button once all required fields are filled
+
+	// REQ1 => Title, validated by plugin
+	// REQ2 => IPFS hash
+	// OPT1 => HTTP mirror
 	function checkFirstFieldsFilled(){
-		var correctRegex = $("#req2").val().match(/^\/?(ipfs|ipns)\/.+/) !== null
+		var correctIPFSRegex = isHashValid($("#req2").val());
+		var correctHTTPRegex = $("#opt1").val() == "" || isUrlValid($("#opt1").val());
+		var allCorrect = true;
+
+		//If the hash field holds correct values
+		if(!correctIPFSRegex) {
+			$("#req2").attr("style", "color: #ff504c;font-weight: bold;");
+			allCorrect = false;
+		}
+		else {
+			$("#req2").removeAttr("style");
+		}
+
+		//If the HTTP field holds correct values
+		if(!correctHTTPRegex) {
+			$("#opt1").attr("style", "color: #ff504c;font-weight: bold;");
+			allCorrect = false;
+		}
+		else {
+			$("#opt1").removeAttr("style");
+		}
 
 		//If all fields hold correct values
-		if ($("#req1").val() != "" && correctRegex){
+		if (allCorrect){
 			$("#but1").prop("disabled", false);
 		}
 		else{
 			$("#but1").prop("disabled", true);
 		}
-
-		//If the hash field holds correct values
-		if(!correctRegex) {
-			$("#req2").attr("style", "color: #ff504c;font-weight: bold;");
-		}
-		else {
-			$("#req2").removeAttr("style");
-		}
 	}
 
 	$("#req1").bind("input", checkFirstFieldsFilled);
 	$("#req2").bind("input", checkFirstFieldsFilled);
+	$("#opt1").bind("input", checkFirstFieldsFilled);
 
 	//Same for the submit button and categories.
 	function updateSubcategories(){
@@ -190,10 +217,4 @@ $(document).ready(()=>{
 			easing: 'easeInOutBack'
 		});
 	});
-
-	/*$(".submit").click(function(){
-		$("form").submit();
-		return false;
-	})*/
-
 });
