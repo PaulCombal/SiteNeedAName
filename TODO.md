@@ -10,7 +10,6 @@
 * [x] User ne peut avoir un 'like' et un 'dislike' pour un même fichier
 * [x] Tous les flags doivent être togglable, pour le moment on ne peut qu'en ajouter.
 * [x] Rediriger vers la dernière page consultée après connexion
-* [ ] Accéder à la page d'utilisateur avec le user id, comme pour les fichiers [ANNULÉ]
 
 * [ ] Inspecter les TODO restant dans le code
 
@@ -22,6 +21,9 @@
 * [ ] Mise en place de commentaires utilisateurs pour chaque fichier
 * [ ] Utiliser la 'tempkey' lors de la soumission d'un fichier / commentaire
 * [ ] Établissement d'un système de karma primitif
+* [ ] Permettre au utilisateurs de modifier leurs publications
+* [ ] Proposer une page de recherche avancée (par catégories..)
+* [ ] Permettre le filtrage sur la page de recherche
 
 * [ ] Inspecter les TODO restant dans le code
 
@@ -29,6 +31,7 @@
 ===> v 0.2
 
 * [ ] S'intéresser à la sécurité
+* [ ] Raffiner le système de karma
 * [ ] Demander du feedback, quelles questions ont été posées + corriger
 * [ ] Recette validation des données
 

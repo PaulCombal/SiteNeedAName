@@ -33,7 +33,7 @@
 
 							#'Headers already sent by' may occur
 							#header("Location: ../../index.php");
-							//echo '<script>window.location.replace(window.location.origin)</script>';
+							echo '<script>window.location.replace(window.location.origin)</script>';
 						} else {
 							exit(form_feedback("Cette adresse e-mail ou nom d'utilisateur existent déjà."));
 						}

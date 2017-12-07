@@ -123,7 +123,7 @@
                     <div class="form-group row">
                     <label class="col-sm-2"></label>
                       <div class="offset-sm-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-primary">Créer mon compte</button>
                       </div>
                     </div>
 
