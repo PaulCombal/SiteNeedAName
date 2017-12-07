@@ -28,10 +28,10 @@
 		$category_id = $db -> quote(htmlspecialchars($_POST['cat']));
 		$subcatgeroy_id = $db -> quote(htmlspecialchars($_POST['subcat']));
 
-		# Optional values
-		$http_mirror = (isset($_POST['http_mirror']) AND !empty($_POST['http_mirror'])) ? $db -> quote(htmlspecialchars($_POST['http_mirror'])) : false;
-		$short_desc = (isset($_POST['short_desc']) AND !empty($_POST['short_desc'])) ? $db -> quote(htmlspecialchars($_POST['short_desc'])) : false;
-		$long_desc = (isset($_POST['long_desc']) AND !empty($_POST['long_desc'])) ? $db -> quote(htmlspecialchars($_POST['long_desc'])) : false;
+		# Optional values (SQL values to be put in the query)
+		$http_mirror = (isset($_POST['http_mirror']) AND !empty($_POST['http_mirror'])) ? $db -> quote(htmlspecialchars($_POST['http_mirror'])) : "NULL";
+		$short_desc = (isset($_POST['short_desc']) AND !empty($_POST['short_desc'])) ? $db -> quote(htmlspecialchars($_POST['short_desc'])) : "NULL";
+		$long_desc = (isset($_POST['long_desc']) AND !empty($_POST['long_desc'])) ? $db -> quote(htmlspecialchars($_POST['long_desc'])) : "NULL";
 
 		# Users accessing this page must be logged
 		# There shouldn't be any issue with session vars, but here goes nothing
@@ -62,25 +62,25 @@
 			die(SHOW_DEFAULT_ERROR_MESSAGE);
 		}
 
-		if ($http_mirror !== false AND !filter_var($_POST['http_mirror'], FILTER_VALIDATE_URL)) {
+		if ($http_mirror !== "NULL" AND !filter_var($_POST['http_mirror'], FILTER_VALIDATE_URL)) {
 			# An HTTP mirror is specified, but does not pass validation
 			die(SHOW_DEFAULT_ERROR_MESSAGE);
 		}
 
 
-		#TODO Use a stored procedure
-		#If the below code is executed, this means the post data is well formatted
-		$prettySQL = "INSERT INTO `files` (`category_id`, `subcategory_id`, `title`, `description`, `longdescription`, `uploaddate`, `hash`, `httpmirror`, `user_id`) VALUES(" . $category_id . ", " . $subcatgeroy_id . ", " . $title . ", " . $short_desc . ", " . $long_desc . ", NOW(), " . $ipfs_hash . ", " . $http_mirror . ", " . $mySafeUserID . ");";
+		$prettySQL = "CALL insertNewFile(" . $category_id . ", " . $subcatgeroy_id . ", " . $title . ", " . $short_desc . ", " . $long_desc . ", " . $ipfs_hash . ", " . $http_mirror . ", " . $mySafeUserID . ");";
 
 		#echo $prettySQL;
-		
-		if($db -> query($prettySQL) === false)
+
+		$result = $db -> select($prettySQL);
+		if($result === false)
 			die(showErrorMessage($db -> error()));
+
+		$file_id = $result[0]['file_id'];
 		
-		echo "Le fichier a été soumis. D'ici peu un dev aura la foi d'écrire un code pour vous rediriger!"; //Todo: redirect to post
 		#'Headers already sent by' may occur
 		#header("Location: ../../index.php");
-		#echo '<script>window.location.replace(window.location.origin + '/' + id + '/' + urlencode(titre))</script>';
+		echo "<script>window.location.replace(window.location.origin + '/télécharger/' + " . $file_id . " + '/' + '" . str_replace(" ", "-", $_POST['title']) . "')</script>";
 	}
 
 	/**
@@ -93,7 +93,7 @@
 	 */
 	function smaller_length($value, $length) {
 		# If an optional field has not been filled, pass the check anyway
-		if($value === false)
+		if($value === "NULL")
 			return true;
 		else
 			return is_string($value) and strlen($value) <= $length + 2; //+2 => mind the quotes
