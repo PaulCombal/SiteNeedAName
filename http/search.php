@@ -1,4 +1,6 @@
 <?php
+	include_once "libs/urlify.php";
+
 	//Start the output buffer
 	ob_start();
 	
@@ -62,7 +64,7 @@
 		foreach ($result as &$row) {
 			echo '<div class="row">';
 			#print_r($row);
-			echo '<a class="result-mainLink" href="./télécharger/' . $row['file_id'] . '/' . str_replace(" ", "-", $row['file_title']) . '">' . $row['file_title'] . '</a>';
+			echo '<a class="result-mainLink" href="./télécharger/' . $row['file_id'] . '/' . urlify($row['file_title']) . '">' . $row['file_title'] . '</a>';
 			
 			echo '<span class="shortcutIcons">';
 			echo '<a href="#"><span title="Copier le hash" class="glyphicon glyphicon-copy" data-clipboard-text="' . $row['file_hash'] . '"></span></a> ';

@@ -1,6 +1,7 @@
 <?php
 	# This file is included from the submit page. No need to specify path from parent folder
 	include_once "libs/database.php";
+	include_once "libs/urlify.php";
 
 	date_default_timezone_set('Europe/Paris');
 
@@ -80,7 +81,7 @@
 		
 		#'Headers already sent by' may occur
 		#header("Location: ../../index.php");
-		echo "<script>window.location.replace(window.location.origin + '/télécharger/' + " . $file_id . " + '/' + '" . str_replace(" ", "-", $_POST['title']) . "')</script>";
+		echo "<script>window.location.replace(window.location.origin + '/télécharger/' + " . $file_id . " + '/' + '" . urlify($_POST['title']) . "')</script>";
 	}
 
 	/**
