@@ -1,6 +1,5 @@
-#Pense bête àl'éventuel futur moi:
-# - Trouver un moyen d'automatiser ce bordel
-# - les .htaccess, c'est de la merde, mieux vaut écrire dans la bonne balise <directory> de httpd.conf
+#Pense bête à l'éventuel futur moi:
+# - Les .htaccess, ce n'est bon que pour la recette, mieux vaut écrire dans la bonne balise <directory> de httpd.conf
 # - décommenter la ligne loadmodule .._rewrite.so
 
 # On suit les liens symboliques 
@@ -8,11 +7,11 @@ Options +FollowSymlinks
 # Activation du mod rewrite d'Apache 
 RewriteEngine On
 
-# 404 TODO
+# 404
 ErrorDocument 404 /404.php
 
 # Réécriture de index.html vers index.php 
 RewriteRule ^index\.html$ /index.php [L]
-RewriteRule ^télécharger\/([0-9]+)\/.*\/description$ /suggest.php?file_id=$1&short=true [L]
+RewriteRule ^télécharger\/([0-9]+)-(s|l)\/.*\/description$ /suggest.php?file_id=$1&length=$2 [L]
 RewriteRule ^télécharger\/([0-9]+)\/.*$ /file.php?id=$1 [L]
 RewriteRule ^users?\/(.*)$ /users.php?name=$1 [L]

@@ -60,7 +60,7 @@ CREATE TABLE `files` (
   CONSTRAINT `fk_files_1` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_files_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_files_3` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +82,50 @@ CREATE TABLE `flags` (
   KEY `fk_flags_2_idx` (`file_id`),
   CONSTRAINT `fk_flags_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flags_2` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `longdesc_suggestions`
+--
+
+DROP TABLE IF EXISTS `longdesc_suggestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `longdesc_suggestions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `desc` varchar(60) COLLATE latin1_general_ci NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `file_id` int(11) unsigned NOT NULL,
+  `date_last_modified` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_longdesc_suggestions_2_idx` (`user_id`),
+  KEY `fk_longdesc_suggestions_1_idx` (`file_id`),
+  CONSTRAINT `fk_longdesc_suggestions_1` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_longdesc_suggestions_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `shortdesc_suggestions`
+--
+
+DROP TABLE IF EXISTS `shortdesc_suggestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shortdesc_suggestions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `desc` varchar(60) COLLATE latin1_general_ci NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `file_id` int(11) unsigned NOT NULL,
+  `date_last_modified` date NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_shortdesc_suggestions_1_idx` (`user_id`),
+  KEY `fk_shortdesc_suggestions_2_idx` (`file_id`),
+  CONSTRAINT `fk_shortdesc_suggestions_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_shortdesc_suggestions_2` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +180,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,6 +293,44 @@ BEGIN
 	flags
 	WHERE
 	file_id = file_id_in AND user_id = user_id_in;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getPendingDescriptions` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPendingDescriptions`(IN file_id_in INT(11))
+BEGIN
+	(
+		SELECT
+			*,
+			'short' AS 'desctype'
+		FROM
+			shortdesc_suggestions
+		WHERE
+			file_id = file_id_in
+	)
+	UNION
+    (
+		SELECT
+			*,
+			'long' AS 'desctype'
+		FROM
+			longdesc_suggestions
+		WHERE
+			file_id = file_id_in
+    )
+    ;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -561,4 +642,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-07 13:40:39
+-- Dump completed on 2017-12-11 22:04:17

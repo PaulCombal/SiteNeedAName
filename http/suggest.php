@@ -36,32 +36,94 @@
 		die("ERROR #2: Impossible to retrieve pending descriptions.");
 	}
 
+	// Arrays containing indexes for both long and short descriptions
+	$aLDescsI = [];
+	$aSDescsI = [];
+
+	foreach ($aDescs as $key => $value) {
+		if ($value["desctype"] === "short") {
+			array_push($aSDescsI, $key);
+		}
+		else {
+			array_push($aLDescsI, $key);
+		}
+	}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Suggérer une description courte</title>
-
-	<!-- Necessary scripts for jQuery and Bootstrap -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
+	
 	<!-- CSS -->
 	<?php include "parts/general_head_includes.php"; ?>
 </head>
 <body>
 	<?php include "parts/header.php"; ?>
 	<div class="container">
-		Je dois afficher les description pour le fichier numéro <?php echo $iFile_id; ?>
+		<ul class="nav nav-pills">
+			<li <?php echo $_GET["length"] === "s" ? 'class="active"' : ''; ?>>
+				<a href="#1b" data-toggle="tab">Descriptions courtes</a>
+			</li>
+			<li <?php echo $_GET["length"] === "l" ? 'class="active"' : ''; ?>>
+				<a href="#2b" data-toggle="tab">Descriptions longues</a>
+			</li>
+		</ul>
+
+		<div class="tab-content clearfix">
+			<div class="tab-pane active" id="1b">
+				<div class="row">
+					<h3>
+						Descriptions courtes proposées:				
+					</h3>
+				</div>
+				
+				<?php
+					foreach ($aSDescsI as &$desc) {
+						echo "<div class=\"row\">";
+						print_r($aDescs[$desc]);
+						echo "</div>";
+					}
+				?>
+
+				<div class="row">
+					<h3>
+						Proposer une description courte
+					</h3>
+					<form>
+						<label>Champs </label>
+					</form>
+				</div>
+			</div>
+			<div class="tab-pane" id="2b">
+				<div class="row">
+					<h3>
+						Descriptions longues proposées:				
+					</h3>
+				</div>
+				
+				<?php
+					foreach ($aLDescsI as &$desc) {
+						echo "<div class=\"row\">";
+						print_r($aDescs[$desc]);
+						echo "</div>";
+					}
+				?>
+
+				<div class="row">
+					<h3>
+						Proposer une description longue
+					</h3>
+					<form>
+						<label>Champs </label>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-	<?php
-		foreach ($desc as &$aDescs) {
-			echo "<div class=\"row\">";
-			echo "string";
-			echo "</div>"
-		}
-	?>
+
+	<!-- Theses ones seem to work usual ones don't correctly -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
