@@ -1,6 +1,4 @@
 <?php
-	include_once "libs/password.php";
-	include_once "libs/database.php";
 
 	date_default_timezone_set('Europe/Paris');
 
@@ -20,16 +18,17 @@
 				$result = $db -> select("CALL getUserByMailOrLogin(" . $email . ");");
 				if(count($result) != 0) {
 					if (password_verify($password, $result[0]['password'])) {
+						$key = md5(uniqid(rand(), true));
+
 						$_SESSION["username"] = $result[0]['username'];
 						$_SESSION["email"] = $result[0]['email'];
 						$_SESSION["userid"] = $result[0]['id'];
 						$_SESSION["key"] = $key;
 
-						$key = md5(uniqid(rand(), true));
 						$db -> query("CALL updateTempkey(" . $_SESSION["userid"] . ", '" . $key . "');");
 
 						if (filter_var($referred_url, FILTER_VALIDATE_URL)) {
-							header("Location: " . $referred_url);
+							 echo '<meta http-equiv="refresh" content="0;url=' . $referred_url . '">';
 						}
 						else {
 							header("Location: ../../index.php");

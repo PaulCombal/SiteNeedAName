@@ -1,45 +1,47 @@
 <?php
-	//Start the output buffer
-	ob_start();
-	
-	//Start the session
-	if(!isset($_SESSION)) {
-		session_start();
+
+
+require("controller/frontend.php");
+
+
+//Start the session
+if(!isset($_SESSION)) {
+	session_start();
+}
+
+if (!isset($_GET["action"])) {
+	display_main_page();
+}
+else {
+	switch ($_GET["action"]) {
+
+		# Display a file etails
+		case 'file':
+			if (isset($_GET["id"]) && !empty($_GET["id"])) {
+				display_file_page($_GET["id"]);
+			} else {
+				display_main_page();
+			}
+			break;
+
+		# Display the search page
+		case 'search':
+			if (isset($_GET["q"]) && !empty($_GET["q"])) {
+				display_search_page($_GET["q"]);
+			} else {
+				display_main_page();
+			}
+			break;
+
+		# Display the login page
+		case 'login':
+			display_login_page();
+			break;
+
+
+		
+		default:
+			display_main_page();
+			break;
 	}
-
-	//include plugins and database lib
-	include "./parts/includes.php";
-
-	//Create a database interface
-	//On failure, displays a nice error message and nothing else.
-	$db = new Db();
-	try
-	{
-		$db->connect();
-	}
-	catch(Exception $e)
-	{
-		ob_clean();
-		die("An error occurred connecting to the database: " . $e->getMessage());
-	}
-
-?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>MONSITE</title>
-	<?php include "parts/general_head_includes.php"; ?>
-</head>
-<body>
-
-<?php
-
-	include "./parts/header.php";
-	include "./parts/index_search.php";
-
-	ob_end_flush();
-?>
-
-</body>
-</html>
+}

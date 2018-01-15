@@ -12,6 +12,7 @@ ErrorDocument 404 /404.php
 
 # Réécriture de index.html vers index.php 
 RewriteRule ^index\.html$ /index.php [L]
+RewriteRule ^(login\/?)$ /index.php?action=login [L]
 RewriteRule ^télécharger\/([0-9]+)-(s|l)\/.*\/description$ /suggest.php?file_id=$1&length=$2 [L]
 RewriteRule ^télécharger\/([0-9]+)\/.*$ /file.php?id=$1 [L]
 RewriteRule ^users?\/(.*)$ /users.php?name=$1 [L]
