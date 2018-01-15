@@ -81,7 +81,11 @@
 				<?php
 					foreach ($aSDescsI as &$desc) {
 						echo "<div class=\"row\">";
-						print_r($aDescs[$desc]);
+						echo $aDescs[$desc]["description"];
+						echo " par ";
+						echo $aDescs[$desc]["username"];
+						echo " le ";
+						echo $aDescs[$desc]["date_last_modified"];
 						echo "</div>";
 					}
 				?>
@@ -91,7 +95,7 @@
 						Proposer une description courte
 					</h3>
 					<form>
-						<label>Champs </label>
+						<label>Champs du formulaire</label>
 					</form>
 				</div>
 			</div>
@@ -115,7 +119,7 @@
 						Proposer une description longue
 					</h3>
 					<form>
-						<label>Champs </label>
+						<label>Champs du formulaire</label>
 					</form>
 				</div>
 			</div>

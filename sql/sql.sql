@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `MyDatabase` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_general_ci */;
 USE `MyDatabase`;
--- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
 --
 -- Host: localhost    Database: MyDatabase
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.28-MariaDB
+-- Server version	5.5.5-10.1.30-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -82,7 +82,7 @@ CREATE TABLE `flags` (
   KEY `fk_flags_2_idx` (`file_id`),
   CONSTRAINT `fk_flags_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_flags_2` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,20 +313,32 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getPendingDescriptions`(IN file_id_
 BEGIN
 	(
 		SELECT
-			*,
+			file_id,
+            username,
+            `desc` AS `description`,
+            date_last_modified,
 			'short' AS 'desctype'
 		FROM
 			shortdesc_suggestions
+			INNER JOIN
+            users 
+				ON users.id = shortdesc_suggestions.user_id
 		WHERE
 			file_id = file_id_in
 	)
 	UNION
     (
 		SELECT
-			*,
+			file_id,
+            username,
+            `desc` AS `description`,
+            date_last_modified,
 			'long' AS 'desctype'
 		FROM
 			longdesc_suggestions
+			INNER JOIN
+            users 
+				ON users.id = longdesc_suggestions.user_id
 		WHERE
 			file_id = file_id_in
     )
@@ -642,4 +654,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-11 22:04:17
+-- Dump completed on 2018-01-15 15:49:36

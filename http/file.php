@@ -213,7 +213,31 @@
 				<?php if (empty($global_arr["file_short_description"])) {
 					?>
 					<div class="noDescription">
-						<em>Aucune desciption courte n'est disponible. <a href="#">TODO Suggérer une description</a></em>
+						<?php 
+						/**
+							To generate the correct url we need to:
+							0. Retrieve the current URL
+							1. Find the last numerical character of the first numerical string
+							2. append -s (for short, -l for long)
+							3. Append /description
+						*/
+
+							$current_url = urldecode('http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/{$_SERVER['REQUEST_URI']}");
+							
+							# For step 1 I was settling for a regex, but turns out a loop is just as easy
+							$b_first_num_encountered = false;
+							for ($i = 0; $i < strlen($current_url); $i++){
+								if (is_numeric($current_url[$i])) {
+									$b_first_num_encountered = true;
+								}
+								elseif ($b_first_num_encountered) {
+									$short_suggest = substr($current_url, 0, $i) . "-s" . substr($current_url, $i) . "/description";
+									$long_suggest  = substr($current_url, 0, $i) . "-l" . substr($current_url, $i) . "/description";
+									break;
+								}
+							}
+						?>
+						<em>Aucune desciption courte n'est disponible. <a href="<?php echo $short_suggest; ?>">Suggérer une description</a></em>
 					</div>
 					<?php
 				}
@@ -234,7 +258,7 @@
 				<?php if (empty($global_arr["file_long_description"])) {
 					?>
 					<div class="noDescription">
-						<em>Aucune desciption longue n'est disponible. <a href="#">TODO Suggérer une description détaillée</a></em>
+						<em>Aucune desciption longue n'est disponible. <a href="<?php echo $long_suggest; ?>">Suggérer une description détaillée</a></em>
 					</div>
 					<?php
 				}
