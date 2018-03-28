@@ -6,7 +6,6 @@ function display_main_page()
 {
 	$view_data["document_title"] = "MONSITE";
 	$view_data["header_hide_logo"] = true;
-	$view_data["username"] = $_SESSION["username"];
 
 	require("view/pages/index_view.php");
 }
@@ -19,6 +18,19 @@ function display_file_page($file_id)
 function display_search_page($search_term)
 {
 
+}
+
+function display_register_page()
+{
+	require("view/pages/register_view.php");
+	require("controller/action/action_register.php");
+
+
+	if (isset($_POST['password']) && isset($_POST['email']) && isset($_POST['tovalidatepassword']) && isset($_POST['username'])) {
+		if (!empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['tovalidatepassword']) && !empty($_POST['username'])) {
+			register();
+		}
+	}
 }
 
 function display_login_page()
@@ -59,5 +71,29 @@ function display_login_page()
 
 	if (!empty($_POST['email']) && !empty($_POST['password'])) {
 		login();
+	}
+}
+
+function display_about_page()
+{
+	require("view/pages/about_view.php");
+}
+
+function display_user_page($user_unique_name)
+{
+	# TODO: is a user name verification needed here?
+	try {
+		$model_data = get_user_data($user_unique_name);
+		$view_data["profile_page_user_name"] = $user_unique_name;
+		$view_data["registration_date"] = &$model_data["reg_date"];
+		$view_data["submitted_files"] = &$model_data["user_posts"];
+
+		require("view/pages/user_profile_page_view.php");
+	}
+	catch (Exception $e) 
+	{
+		# TODO: upgrade
+		# require("view/pages/error.php");
+		die($e->getMessage());
 	}
 }

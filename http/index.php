@@ -38,6 +38,25 @@ else {
 			display_login_page();
 			break;
 
+		# Display the page for a new user to register
+		case 'register':
+			display_register_page();
+			break;
+
+		# Display the about page
+		case 'about':
+			display_about_page();
+			break;
+
+		# Display a user's profile page
+		case 'user':
+			if (isset($_GET["user"]) && !empty($_GET["user"])) {
+				display_user_page($_GET["user"]);
+			} else {
+				display_main_page();
+			}
+			break;
+
 
 		
 		default:

@@ -32,8 +32,6 @@
 	*/
 
 
-	session_start();
-
 	/* Validate data received from client */
 	if (!isset($_SESSION["userid"]) OR empty($_SESSION["userid"])) {
 		die(

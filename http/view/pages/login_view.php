@@ -11,7 +11,7 @@
 
         <?php include "view/general_head_includes.php"; ?>
 
-        <link href="http://localhost/public/css/custom_registerlogin.css" rel="stylesheet" />
+        <link href="../public/css/custom_registerlogin.css" rel="stylesheet" />
 
     </head>
 
@@ -23,14 +23,14 @@
 
             <!-- Login -->
             <div id="loginRow" class="row">
-                <a href="index.php"><img src="http://localhost/public/images/logos/logo_120x44.png" alt="Logo Monsite" class="logo120x44"/></a>
+                <a href="./"><img src="../public/images/logos/logo_120x44.png" alt="Logo Monsite" class="logo120x44"/></a>
                 
                 <div id="loginTitles">
                     <h2>Connexion</h2>
                     <h3>Utiliser votre compte Monsite</h3>
                 </div>
                 
-                <form method="POST" action="http://localhost/login" data-toggle="validator" id="loginform">
+                <form method="POST" action="./login" data-toggle="validator" id="loginform">
                     <div id="feedback" style="display: none;" class="alert alert-danger"></div>
                     <!-- (mail) -->
                     <div class="form-group row">

@@ -1,6 +1,4 @@
 <?php
-	include_once "libs/password.php";
-	include_once "libs/database.php";
 
 	date_default_timezone_set('Europe/Paris');
 
@@ -16,38 +14,40 @@
 		$email = $db -> quote(htmlspecialchars($_POST['email']));
 		$username = $db -> quote(htmlspecialchars($_POST['username']));
 
-		if(valid_register_postdata()) {
-			if(!is_temp_mail(htmlspecialchars($_POST['email']))) {
-				if(passwords_match($password,$toValidatePassword)) {
-					if(valid_password(htmlspecialchars($_POST['password']))) {
-						if(!already_registered($email,$username,$db)) {
-							$hashed_password = password_hash($password, PASSWORD_BCRYPT);
-							$key = md5(uniqid(rand(), true));
+		try {
+			if(valid_register_postdata()) {
+				if(!is_temp_mail(htmlspecialchars($_POST['email']))) {
+					if(passwords_match($password,$toValidatePassword)) {
+						if(valid_password(htmlspecialchars($_POST['password']))) {
+							if(!already_registered($email,$username,$db)) {
+								$hashed_password = password_hash($password, PASSWORD_BCRYPT);
+								$key = md5(uniqid(rand(), true));
 
-							$result = $db -> select("CALL createNewUser(" . $email . ", " . $username . ", '" . $hashed_password . "', '" . $key . "');"); 
+								$result = $db -> select("CALL createNewUser(" . $email . ", " . $username . ", '" . $hashed_password . "', '" . $key . "');"); 
 
-							$_SESSION["username"] = htmlspecialchars($_POST['username']);
-							$_SESSION["email"] = htmlspecialchars($_POST['email']);
-							$_SESSION["userid"] = $result[0]['user_id'];
-							$_SESSION["key"] = $key;
+								$_SESSION["username"] = htmlspecialchars($_POST['username']);
+								$_SESSION["email"] = htmlspecialchars($_POST['email']);
+								$_SESSION["userid"] = $result[0]['user_id'];
+								$_SESSION["key"] = $key;
 
-							#'Headers already sent by' may occur
-							#header("Location: ../../index.php");
-							echo '<script>window.location.replace(window.location.origin)</script>';
+								echo '<script>window.location.replace(window.location.origin)</script>';
+							} else {
+								exit(form_feedback("Cette adresse e-mail ou nom d'utilisateur existent déjà."));
+							}
 						} else {
-							exit(form_feedback("Cette adresse e-mail ou nom d'utilisateur existent déjà."));
+							exit(form_feedback("Le mot de passe doit être plus."));
 						}
 					} else {
-						exit(form_feedback("Le mot de passe doit être plus."));
+						exit(form_feedback("Les mots de passe renseignés sont différents."));
 					}
 				} else {
-					exit(form_feedback("Les mots de passe renseignés sont différents."));
+					exit(form_feedback("Veuillez utiliser une adresse e-mail correcte."));
 				}
 			} else {
-				exit(form_feedback("Veuillez utiliser une adresse e-mail correcte."));
+				exit(form_feedback("Veuillez remplir les champs."));
 			}
-		} else {
-			exit(form_feedback("Veuillez remplir les champs."));
+		} catch(Exception $e) {
+			form_feedback($e->getMessage());
 		}
 	}
 
@@ -69,6 +69,12 @@
 	 */
 	function is_temp_mail($mail) {
     	$mail_domains_ko = file('https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blacklist.conf', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    	
+    	if ($mail_domains_ko === false) {
+    		throw new Exception("Désolé, nous ne pouvons pas valider votre addresse mail :( Réessayez plus tard!", 1);
+    		return false;
+    	}
+
     	return in_array(explode('@', htmlspecialchars($mail))[1], $mail_domains_ko);
 	}
 
