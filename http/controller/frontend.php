@@ -48,6 +48,10 @@ function display_login_page()
 			   same_origin($_SERVER["HTTP_REFERER"], $_SERVER["HTTP_HOST"], $_SERVER["REQUEST_SCHEME"])) 
 			{
 				# We redirect to the last visited page, if the last visited page was on this website
+				# TODO
+				#if (User comes from the register or login page) {
+					# redirect to the main page
+				#}
 				$view_data["redirect_if_success"] = $_SERVER["HTTP_REFERER"];
 			}
 			else 
@@ -96,4 +100,24 @@ function display_user_page($user_unique_name)
 		# require("view/pages/error.php");
 		die($e->getMessage());
 	}
+}
+
+function display_submit_page()
+{
+	if(!isset($_SESSION["username"])) {
+		header("Location: " . $base . "/register");
+		print_r($_SESSION);
+		exit;
+	}
+
+	require("controller/action/action_submit.php");
+	
+	if (isset($_POST['title']) && isset($_POST['ipfs_hash']) && isset($_POST['cat']) && isset($_POST['subcat'])) {
+		if (!empty($_POST['title']) && !empty($_POST['ipfs_hash']) && !empty($_POST['cat']) && !empty($_POST['subcat'])) {
+			submit();
+			$_POST = [];
+		}
+	}
+
+	require("view/pages/submit_hash_view.php");
 }

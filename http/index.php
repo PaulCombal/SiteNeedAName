@@ -57,6 +57,11 @@ else {
 			}
 			break;
 
+		# Display the hash submission page
+		case 'submit':
+			display_submit_page();
+			break;
+
 
 		
 		default:

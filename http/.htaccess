@@ -1,6 +1,6 @@
-#Pense bête à l'éventuel futur moi:
-# - Les .htaccess, ce n'est bon que pour la recette, mieux vaut écrire dans la bonne balise <directory> de httpd.conf
-# - décommenter la ligne loadmodule .._rewrite.so
+# Pense bête à l'éventuel futur moi:
+#  - Les .htaccess, ce n'est bon que pour la recette, mieux vaut écrire dans la bonne balise <directory> de httpd.conf
+#  - décommenter la ligne loadmodule .._rewrite.so
 
 # On suit les liens symboliques 
 Options +FollowSymlinks 
@@ -10,12 +10,15 @@ RewriteEngine On
 # 404
 ErrorDocument 404 /404.php
 
+
+# Empêcher des erreurs d'affichages en redirigeant les pages finissant par un /
+# vers la même page sans /
+RedirectMatch (.+)\/$ $1
+
 # Réécriture de index.html vers index.php 
-RewriteRule ^index\.html$ /index.php [L]
-RewriteRule ^(login\/?)$ /index.php?action=login [L]
-RewriteRule ^(register\/?)$ /index.php?action=register [L]
-RewriteRule ^(about\/?)$ /index.php?action=about [L]
-RewriteRule ^(user\/([^\/]*)\/?)$ /index.php?action=user&user=$2 [L]
-#RewriteRule ^télécharger\/([0-9]+)-(s|l)\/.*\/description$ /suggest.php?file_id=$1&length=$2 [L]
-#RewriteRule ^télécharger\/([0-9]+)\/.*$ /file.php?id=$1 [L]
-#RewriteRule ^users?\/(.*)$ /users.php?name=$1 [L]
+RewriteRule ^login$ /index.php?action=login [L]
+RewriteRule ^register$ /index.php?action=register [L]
+RewriteRule ^about$ /index.php?action=about [L]
+RewriteRule ^submit$ /index.php?action=submit [L]
+RewriteRule ^logout$ /logout.php [L]
+RewriteRule ^user\/([^\/]*)$ /index.php?action=user&user=$1 [L]

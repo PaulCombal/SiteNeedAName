@@ -24,7 +24,7 @@
 			<a href="<?= $base ?>about"><span class="glyphicon glyphicon-question-sign"></span> Aide</a>
 		</li>
 		<li>
-			<a href="<?= $base ?>submit.php"><span class="glyphicon glyphicon-file"></span> Soumettre un fichier</a>
+			<a href="<?= $base ?>submit"><span class="glyphicon glyphicon-file"></span> Soumettre un fichier</a>
 		</li>
 
 		<?php
