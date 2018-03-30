@@ -12,12 +12,36 @@ function display_main_page()
 
 function display_file_page($file_id)
 {
-
+	$view_data = [];
+	try {
+		$view_data['all_file_data'] = get_file_data($file_id);
+	}
+	catch (Exception $e) {
+		# TODO make view
+		die($e -> getMessage());
+	}
+	echo "<pre>";
+	print_r($view_data);
+	echo "</pre>";
+	require("view/pages/file_view.php");
 }
 
 function display_search_page($search_term)
 {
+	$view_data['document_title'] = $search_term;
+	$view_data['header_search_query'] = true;
+	$view_data['search_results'] = [];
+	
+	try {
+		$view_data['search_results'] = get_search_results($search_term);
+	}
+	catch (Exception $e) {
+		# TODO
+		#require("view/errorpage_view.php");
+		die("erreur:" . $e->getMessage());
+	}
 
+	require("view/pages/search_view.php");
 }
 
 function display_register_page()

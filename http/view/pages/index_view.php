@@ -15,8 +15,8 @@
 			<img src="public/images/logos/logo_272x92.png" alt="Logo Monsite" />
 		</div>
 		<div class="searchBar">
-			<form action="./search" method="get">
-				<input class="mainSearchBar" type="text" name="search" autofocus />
+			<form action="search" method="get">
+				<input class="mainSearchBar" type="text" name="q" autofocus />
 				<br />
 				<input class="mainSearchButton form-control" type="submit" value="Recherche Monsite" />
 				<input class="advancedSearchButton form-control" type="button" value="Recherche Avancée" />

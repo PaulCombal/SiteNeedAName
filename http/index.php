@@ -17,7 +17,7 @@ else {
 
 		# Display a file etails
 		case 'file':
-			if (isset($_GET["id"]) && !empty($_GET["id"])) {
+			if (isset($_GET["id"]) && !empty($_GET["id"]) && is_numeric($_GET["id"])) {
 				display_file_page($_GET["id"]);
 			} else {
 				display_main_page();
