@@ -84,7 +84,7 @@
 					<em>Référencé le <?= $view_data['all_file_data']['file_details']['file_upload_date'] ?></em>
 				</div>
 				<div id="submitter">
-					<a href="../../users/<?= $view_data['all_file_data']['file_details']['user_name'] ?>">Soumis par <?= $view_data['all_file_data']['file_details']['user_name'] ?></a>
+					<a href="../../user/<?= $view_data['all_file_data']['file_details']['user_name'] ?>">Soumis par <?= $view_data['all_file_data']['file_details']['user_name'] ?></a>
 				</div>
 			</div>
 		</div>
@@ -99,7 +99,7 @@
 					if (empty($view_data['all_file_data']['file_details']['file_short_description'])) {
 					?>
 					<div class="noDescription">
-						<em>Aucune desciption courte n'est disponible. <a href="<?= 'TODO' ?>">Suggérer une description</a></em>
+						<em>Aucune desciption courte n'est disponible. <a href="<?= $view_data['suggest_page_url'] ?>">Suggérer une description</a></em>
 					</div>
 					<?php
 				}
@@ -118,7 +118,7 @@
 				<?php if (empty($view_data['all_file_data']['file_details']['file_long_description'])) {
 					?>
 					<div class="noDescription">
-						<em>Aucune desciption longue n'est disponible. <a href="<?= 'TODO' ?>">Suggérer une description détaillée</a></em>
+						<em>Aucune desciption longue n'est disponible. <a href="<?= $view_data['suggest_page_url'] ?>">Suggérer une description détaillée</a></em>
 					</div>
 					<?php
 				}
@@ -143,13 +143,12 @@
 					<span id="hash-text">
 						<?= $view_data['all_file_data']['file_details']['file_hash'] ?>
 					</span>
-					<!-- TODO Bouton copier -->
 					<br />
 					<br />
 					<div class="btn-group">
 						<a href="javascript:void(0)" data-clipboard-target="#hash-text" class="btn btn-primary"><span class="glyphicon glyphicon-copy"></span> Copier</a>
-						<a href="http://127.0.0.1:8080/<?= $view_data['all_file_data']['file_details']['file_hash'] ?>" target="_blank" title="Le service IPFS doit être lancé sur votre machine" class="btn btn-primary"><span class="glyphicon glyphicon-cloud-download"></span> Télécharger en navigateur</a>
-						<a href="http://ipfs.io/<?= $view_data['all_file_data']['file_details']['file_hash'] ?>" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-save-file"></span> Mirroir HTTP ipfs.io</a>
+						<a href="http://127.0.0.1:8080<?= $view_data['all_file_data']['file_details']['file_hash'] ?>" target="_blank" title="Le service IPFS doit être lancé sur votre machine" class="btn btn-primary"><span class="glyphicon glyphicon-cloud-download"></span> Télécharger en navigateur</a>
+						<a href="http://ipfs.io<?= $view_data['all_file_data']['file_details']['file_hash'] ?>" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-save-file"></span> Mirroir HTTP ipfs.io</a>
 					</div>
 				</div>
 				<br />
@@ -188,10 +187,14 @@
 				<div>
 					<?php
 						if(empty($view_data['all_file_data']['file_details']['file_http_mirror'])) {
-							echo 'Aucun mirroir. <a href="#">Proposer une suggestion</a>';
+							echo 'Aucun mirroir. <a href="' . $view_data['suggest_page_url'] . '">Proposer une suggestion</a>';
 						}
 						else {
+							echo '<a target="_blank" href="';
 							echo $view_data['all_file_data']['file_details']['file_http_mirror'];
+							echo '">';
+							echo $view_data['all_file_data']['file_details']['file_http_mirror'];
+							echo '</a>';
 						}
 					?>
 				</div>

@@ -57,7 +57,7 @@
 										echo $row['upload_date'];
 									echo "</td>";
 									echo "<td>";
-										echo '<a href="../télécharger/' . $row['file_id'] . '/' . $row['title'] .'">Consulter</a>';
+										echo '<a href="../file/' . $row['file_id'] . '/' . $row['title'] .'">Consulter</a>';
 									echo "</td>";
 							 	echo "</tr>";
 							 } 

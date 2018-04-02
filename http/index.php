@@ -62,6 +62,14 @@ else {
 			display_submit_page();
 			break;
 
+		case 'suggest':
+			if (isset($_GET["id"]) && !empty($_GET["id"]) && is_numeric($_GET["id"])) {
+				display_suggest_page($_GET["id"]);
+			} else {
+				display_main_page();
+			}
+			break;
+
 
 		
 		default:

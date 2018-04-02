@@ -7,7 +7,7 @@
 		# Logo in the top header
 		if (!isset($view_data["header_hide_logo"])) { ?>
 			<span class="navbar-text logoLink">
-				<a href="./">
+				<a href="<?= $base ?>">
 					<img src="<?= $base ?>public/images/logos/logo_120x44.png" alt="Logo monsite" class="logo120x44"/>
 				</a>
 			</span>

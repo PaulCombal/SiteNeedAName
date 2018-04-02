@@ -2,18 +2,23 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
-//Make sure not to change the order or content of those, they are directly related to database indexes
+// WARNING: The order or content of those are directly related to database indexes
+// WARNING: You WILL have to make changes to your database and this script if you want to make this 
+// thing work
+// The values you see here are simply placeholder values for an example
 const subcatMovies = ["Action", "Polar", "Comédie"];
 const subcatSeries = ["Action", "Polar", "Comédie"];
-const subcatMusic = []; //TODO
-const subcatGames = []; //TODO
-const subcatSoftware = []; //TODO
-const subcatAnime = []; //TODO
-const subcatBooks = []; //TODO
-const subcatXXX = []; //TODO
-const subcatOthers = []; //TODO
+const subcatMusic = [];
+const subcatGames = [];
+const subcatSoftware = [];
+const subcatAnime = [];
+const subcatBooks = [];
+const subcatXXX = [];
+const subcatOthers = [];
 
 $(document).ready(()=>{
+
+	var md_converter = new showdown.Converter();
 	
 	//*********** Validation / custom jQuery ************//
 	function isUrlValid(url) {
@@ -24,11 +29,16 @@ $(document).ready(()=>{
 		return /^\/ipfs\/Qm[1-9A-HJ-NP-Za-km-z]{44}(\/.*)?|^\/ipns\/.+/.test(hash);
 	}
 
+	function previewMD() {
+		$("#long_desc_preview").html(md_converter.makeHtml($(".hiddenField").val()));
+	}
+
 
 
 	//Show the long desc field once desired
 	$("a#showLongDescField").click(function(){
 		$(".hiddenField").removeAttr("style");
+		$("#preview_link").removeAttr("style").click(previewMD);
 		$(this).remove();
 	});
 

@@ -24,7 +24,7 @@
         include "view/header_template.php";
     ?>
 
-    <h1>Créer votre compte Monsite</h1>
+    <h1>Créer votre compte IPFS France</h1>
     <!-- Page Content -->
     <div class="container">
 

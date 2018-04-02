@@ -10,7 +10,10 @@
 * [x] User ne peut avoir un 'like' et un 'dislike' pour un même fichier
 * [x] Tous les flags doivent être togglable, pour le moment on ne peut qu'en ajouter.
 * [x] Rediriger vers la dernière page consultée après connexion
-* [ ] Fixer la page de consultation de fichier
+* [x] Fixer la page de consultation de fichier
+* [ ] Fixer la page de suggestions d'amélioration
+* [ ] Ajouter une vue pour les erreurs
+* [ ] Refactorer l'intégralité de la codebase
 
 * [ ] Inspecter les TODO restant dans le code
 

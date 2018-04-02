@@ -62,8 +62,11 @@ $(document).ready(() => {
 	*	nothing
 	*/
 	function sendFlag(actionValue, callbackSuccess, printSelector = "body") {
+		console.log(window.location.origin + "/controller/action/action_manage_flags.php");
+		console.log(actionValue);
+		console.log(printSelector);
 		$.post(
-			"../../parts/action_manage_flags.php",
+			window.location.origin + "/controller/action/action_manage_flags.php",
 			{
 				action: actionValue,
 				fileid: file_id

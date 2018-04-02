@@ -1,9 +1,4 @@
 <?php
-	//ob_start();
-	session_start();
-
-    // Include plugin.
-    //include_once "../../plugins/private_signup_plugin.php";
 
     // Redirect if the user not logged in.
 	if(!isset($_SESSION["username"])) {
@@ -53,9 +48,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Suggérer une description courte</title>
-	
-	<!-- CSS -->
+	<title>Améliorer IPFS France</title>
 	<?php include "parts/general_head_includes.php"; ?>
 </head>
 <body>

@@ -8,7 +8,7 @@ Options +FollowSymlinks
 RewriteEngine On
 
 # 404
-ErrorDocument 404 /404.php
+ErrorDocument 404 /view/pages/404_view.php
 
 
 # Empêcher des erreurs d'affichages en redirigeant les pages finissant par un /
@@ -20,7 +20,8 @@ RewriteRule ^login$ /index.php?action=login [L]
 RewriteRule ^register$ /index.php?action=register [L]
 RewriteRule ^about$ /index.php?action=about [L]
 RewriteRule ^submit$ /index.php?action=submit [L]
-RewriteRule ^logout$ /logout.php [L]
+RewriteRule ^logout$ /controller/logout.php [L]
 RewriteRule ^user\/([^\/]*)$ /index.php?action=user&user=$1 [L]
+RewriteRule ^suggest\/([0-9]*)$ /index.php?action=suggest&id=$1 [L]
 RewriteRule ^file\/([0-9]+)\/[^\/]*$ /index.php?action=file&id=$1 [L]
 RewriteRule ^search /index.php?action=search [L,QSA]

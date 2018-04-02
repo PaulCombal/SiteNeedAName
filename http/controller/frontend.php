@@ -4,15 +4,25 @@ require("model/frontend.php");
 
 function display_main_page()
 {
-	$view_data["document_title"] = "MONSITE";
+	$view_data["document_title"] = "IPFS France";
 	$view_data["header_hide_logo"] = true;
 
 	require("view/pages/index_view.php");
 }
 
+function display_suggest_page($file_id)
+{
+	if(!isset($_SESSION["username"])) {
+		header("Location: " . $base . "/register");
+		exit;
+	}
+	
+	require("view/pages/suggest_view.php");
+}
+
 function display_file_page($file_id)
 {
-	$view_data = [];
+	$view_data['suggest_page_url'] = "http://" . $_SERVER["HTTP_HOST"] . "/suggest/" . $file_id;
 	try {
 		$view_data['all_file_data'] = get_file_data($file_id);
 	}
@@ -20,9 +30,7 @@ function display_file_page($file_id)
 		# TODO make view
 		die($e -> getMessage());
 	}
-	echo "<pre>";
-	print_r($view_data);
-	echo "</pre>";
+
 	require("view/pages/file_view.php");
 }
 
@@ -130,7 +138,6 @@ function display_submit_page()
 {
 	if(!isset($_SESSION["username"])) {
 		header("Location: " . $base . "/register");
-		print_r($_SESSION);
 		exit;
 	}
 
