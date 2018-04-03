@@ -16,8 +16,26 @@ function display_suggest_page($file_id)
 		header("Location: " . $base . "/register");
 		exit;
 	}
+
+	$view_data = [];
+	if (isset($_POST['desc']) && !empty($_POST['desc'])) {
+		try {
+			$view_data['user_descriptions'] = submit_description($file_id, $_POST['desc'], isset($_POST['short']));			
+		}
+		catch (Exception $e) {
+			#TODO VIEIEW
+			die($e->getMessage());
+		}
+	}
 	
-	require("view/pages/suggest_view.php");
+	try {
+		$view_data['file_descriptions'] = get_file_suggestions($file_id);
+		$view_data['file_id'] = $file_id;
+		require("view/pages/suggest_view.php");
+	} catch (Exception $e) {
+		# TODO VIEW
+		die($e->getMessage());
+	}
 }
 
 function display_file_page($file_id)

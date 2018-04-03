@@ -84,14 +84,40 @@ function get_user_data($user_unique_name) {
 }
 
 function get_search_results($query) {
-
-	//Create a database interface
-	//On failure, displays a nice error message and nothing else.
 	$db = new Db();
-	$db->connect();
+	$db->connect(); // Necessary? TODO
 
 	# TODO Review procedure to only return required fields
 	# with a correct name
 	$result = $db -> select ("CALL getPostsBySearch(" . $db -> quote($query) . ", NULL, NULL, NULL, NULL);");
 	return $result;
+}
+
+function get_file_suggestions($file_id) {
+	$db = new Db();
+	$aDescs = $db -> select("CALL getPendingDescriptions(" . $file_id . ");");
+
+	if($aDescs === false) {
+		die("ERROR #2: Impossible to retrieve pending descriptions.");
+	}
+
+	return $aDescs;
+}
+
+# Returns the currently logged in submitted suggestions
+function submit_description($file_id, $desc_text, $is_short_desc) {
+	$db = new Db();
+
+	$desc_text = $db -> quote($desc_text);
+	$is_short_desc = $is_short_desc == true ? 'TRUE' : 'FALSE';
+	$user_id = $_SESSION['userid'];
+	$prettySQL = "CALL insertNewDescription({$file_id}, {$user_id}, {$desc_text}, {$is_short_desc});";
+
+	echo $prettySQL;
+
+	#$user_descs = $db -> select($prettySQL);
+	#return $user_descs;
+
+	# 'short' => '', leave empty if no desc specified beforehand
+	return ['short' => 'La description courte que j\'ai tapé auparavant', 'long' => 'La description longue de mon choix avec support MD'];
 }
