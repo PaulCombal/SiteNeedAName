@@ -1,3 +1,5 @@
+# Project no longer maintained. Will be Rewritten with Symfony, when the time will have come
+
 # Site name goes here
 
 <logo here>
