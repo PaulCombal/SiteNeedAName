@@ -1,5 +1,10 @@
 # Project no longer maintained. Will be Rewritten with Symfony, when the time will have come
 
+New Backend Git: [here](https://bitbucket.org/yhu420/ipfs-france-website/src/master/)
+
+
+New Frontend Git: [here](https://bitbucket.org/yhu420/ipfs-france-frontend/src/master)
+
 # Site name goes here
 
 <logo here>
